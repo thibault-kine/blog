@@ -3,7 +3,12 @@
 ?>
 <?php 
     require_once 'pdo.php';
-    
+
+
+    $selec = "SELECT * FROM `articles` ";
+    $prep = $this -> bdd -> prepare($selec);
+    $exec ->execute();
+    $arti = $exec->fetchAll();
 ?>
 
 
