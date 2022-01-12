@@ -15,6 +15,7 @@ public function article()
 
 
 
+
 <a href="articles.php">Articles</a>
 <?php
     include 'footer.php';
