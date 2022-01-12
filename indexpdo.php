@@ -10,4 +10,8 @@ $myUser = new User(
 $myUser->register();
 
 var_dump($myUser);
+
+$myUser->delete();
+
+var_dump($myUser);
 ?>

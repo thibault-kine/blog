@@ -64,5 +64,28 @@ class User
             return;
         }
     }
+    
+    public function delete()
+    {
+        $host = "localhost";
+        $dbname = "blog";
+
+        $connexion = new PDO(
+            "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
+            "root",
+            ""
+        );
+
+        $deleteQ = "DELETE FROM utilisateurs WHERE id='$this->id'";
+
+        $preparation = $connexion->prepare($deleteQ);
+        $preparation->execute();
+
+        unset($this->id);
+        unset($this->login);
+        unset($this->password);
+        unset($this->email);
+        unset($this->droits);
+    }
 }
 ?>
