@@ -1,5 +1,5 @@
 <?php
-include("pdo.php");
+require("pdo.php");
 
 $myUser = new User(
     "martin13",
