@@ -12,6 +12,7 @@
             elseif(!empty($_SESSION) && $_SESSION["droit"]["id"]=="1337")
             {
                 echo '<a href="index.php">Acceuil</a>';
+                echo '<a href="articles.php">Articles</a>';
                 echo '<a href="profil.php">Profil</a>';
                 echo '<a href="creer-article.php">Creer un article</a>';
                 echo '<a href="admin.php">Administration</a>';
@@ -22,6 +23,7 @@
             elseif(!empty($_SESSION) && $_SESSION["droit"]["id"]=="42")
             {
                 echo '<a href="index.php">Acceuil</a>'; 
+                echo '<a href="articles.php">Articles</a>';
                 echo '<a href="profil.php">Profil</a>';
                 echo '<a href="creer-article.php">Creer un article</a>';
                 echo '<a href="deconnexion.php">Déconnexion</a>';
