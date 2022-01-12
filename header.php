@@ -23,7 +23,7 @@
                 echo '<a href="inscription.php">Inscription</a>';
             }
             // acces admin
-            elseif(!empty($_SESSION) && $_SESSION["droit"]["id"]!="1337")
+            elseif(!empty($_SESSION) && $_SESSION["droit"]["id"]=="1337")
             {
                 echo '<a href="index.php">Acceuil</a>';
                 echo '<a href="profil.php">Profil</a>';
@@ -33,7 +33,7 @@
 
             }
             //acces modo
-            elseif(!empty($_SESSION) && $_SESSION["droit"]["id"]!="42")
+            elseif(!empty($_SESSION) && $_SESSION["droit"]["id"]=="42")
             {
                 echo '<a href="index.php">Acceuil</a>'; 
                 echo '<a href="profil.php">Profil</a>';
