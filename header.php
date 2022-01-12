@@ -17,17 +17,22 @@
     <header>
         <a href="livre-or.php">BLOG</a>
         <?php
-            if(!$_SESSION)
+            if(empty($_SESSION))
             {
                 echo '<a href="connexion.php">Connexion</a>';
                 echo '<a href="inscription.php">Inscription</a>';
             }
-            else
+            elsif(!empty($_SESSION) && )
             {
                 echo '<a href="commentaire.php">Commentaire</a>';
-                echo '<a href="profil.php">Profil</a>';
+            }
+            else
+            {
                 echo '<a href="index.php">Acceuil</a>';
+                echo '<a href="articles.php">Articles</a>';
+                echo '<a href="profil.php">Profil</a>';
                 echo '<a href="deconnexion.php">Déconnexion</a>';
+
             }
         ?>      
         
