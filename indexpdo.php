@@ -1,5 +1,5 @@
 <?php
-require("pdo.php");
+require("user.php");
 require("article.php");
 require("categorie.php");
 
