@@ -17,54 +17,67 @@ class User
 
     public function register()
     {
-        $host = "localhost";
-        $dbname = "blog";
-        $this->password->password_hash($this->password,PASSWORD_DEFAULT);
-
-        $selectQ = "SELECT * FROM utilisateurs WHERE login='$this->login' OR email='$this->email'";
-        $insertQ = "INSERT INTO utilisateurs(login, password, email, id_droits) VALUES ('$this->login', '$this->password', '$this->email', '$this->droits')";
-
-        try 
+        if(isset($this->login) && isset($this->email))
         {
-            $connexion = new PDO(
-                "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
-                "root",
-                ""
-            );
-        }
-        catch(Exception $e)
-        {
-            die("Erreur: ".$e->getMessage());
-        }
+            $host = "localhost";
+            $dbname = "blog";
 
-        $preparation = $connexion->prepare($selectQ);
-        $fetch = $preparation->fetchAll();
+            $selectQ = "SELECT * FROM utilisateurs WHERE login='$this->login' OR email='$this->email'";
+            $insertQ = "INSERT INTO utilisateurs(login, password, email, id_droits) VALUES ('$this->login', '$this->password', '$this->email', '$this->droits')";
 
-        if(!empty($fetch))
-        {
-            echo "Un utilisateur utilise déjà ce login ou cette adresse e-mail.";
-            return;
+            try 
+            {
+                $connexion = new PDO(
+                    "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
+                    "root",
+                    ""
+                );
+            }
+            catch(Exception $e)
+            {
+                die("Erreur: ".$e->getMessage());
+            }
+
+            $preparation = $connexion->prepare($selectQ);
+            $preparation->execute();
+            $fetch = $preparation->fetchAll();
+
+            if(!empty($fetch))
+            {
+                echo "Un utilisateur utilise déjà ce login ou cette adresse e-mail.";
+            }
+            else
+            {
+                $preparation = $connexion->prepare($insertQ);
+                $preparation->execute();
+            }
+            // récupérer l'id
+            $preparation = $connexion->prepare("SELECT id FROM utilisateurs WHERE login='$this->login' AND email='$this->email'");
+            $preparation->execute();
+            $fetch = $preparation->fetchAll();
+
+            $this->id = $fetch[0]["id"];
         }
         else
         {
-            $preparation = $connexion->prepare($insertQ);
-            $fetch = $preparation->fetchAll();
-
-            $this->id = $fetch["id"];
+            echo "Erreur: Veuillez initialiser l'utilisateur";
+            return;
         }
     }
+    
     public function delete()
     {
         $host = "localhost";
         $dbname = "blog";
 
-        $connexion = new pdo(
-            "mysql:host=".$host.";dbname".$dbname.";charset=utf8",
+        $connexion = new PDO(
+            "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
             "root",
             ""
         );
+
         $deleteQ = "DELETE FROM utilisateurs WHERE id='$this->id'";
-        
+
         $preparation = $connexion->prepare($deleteQ);
         $preparation->execute();
 
