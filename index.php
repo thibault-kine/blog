@@ -4,13 +4,13 @@
 <?php 
     require_once 'pdo.php';
 
-public function article()
-{
-    $selec = "SELECT * FROM `articles` ";
-    $prep = $this -> bdd -> prepare($selec);
-    $exec ->execute();
-    $arti = $exec->fetchAll();
-}
+// public function article()
+// {
+//     $selec = "SELECT * FROM `articles` ";
+//     $prep = $this -> bdd -> prepare($selec);
+//     $exec ->execute();
+//     $arti = $exec->fetchAll();
+// }
 ?>
 
 

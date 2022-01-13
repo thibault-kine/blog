@@ -17,75 +17,40 @@ class User
 
     public function register()
     {
-        if(isset($this->login) && isset($this->email))
-        {
-            $host = "localhost";
-            $dbname = "blog";
-
-            $selectQ = "SELECT * FROM utilisateurs WHERE login='$this->login' OR email='$this->email'";
-            $insertQ = "INSERT INTO utilisateurs(login, password, email, id_droits) VALUES ('$this->login', '$this->password', '$this->email', '$this->droits')";
-
-            try 
-            {
-                $connexion = new PDO(
-                    "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
-                    "root",
-                    ""
-                );
-            }
-            catch(Exception $e)
-            {
-                die("Erreur: ".$e->getMessage());
-            }
-
-            $preparation = $connexion->prepare($selectQ);
-            $preparation->execute();
-            $fetch = $preparation->fetchAll();
-
-            if(!empty($fetch))
-            {
-                echo "Un utilisateur utilise déjà ce login ou cette adresse e-mail.";
-            }
-            else
-            {
-                $preparation = $connexion->prepare($insertQ);
-                $preparation->execute();
-            }
-            // récupérer l'id
-            $preparation = $connexion->prepare("SELECT id FROM utilisateurs WHERE login='$this->login' AND email='$this->email'");
-            $preparation->execute();
-            $fetch = $preparation->fetchAll();
-
-            $this->id = $fetch[0]["id"];
-        }
-        else
-        {
-            echo "Erreur: Veuillez initialiser l'utilisateur";
-            return;
-        }
-    }
-    
-    public function delete()
-    {
         $host = "localhost";
         $dbname = "blog";
 
-        $connexion = new PDO(
-            "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
-            "root",
-            ""
-        );
+        $selectQ = "SELECT * FROM utilisateurs WHERE login='$this->login' OR email='$this->email'";
+        $insertQ = "INSERT INTO utilisateurs(login, password, email, id_droits) VALUES ('$this->login', '$this->password', '$this->email', '$this->droits')";
 
-        $deleteQ = "DELETE FROM utilisateurs WHERE id='$this->id'";
+        try 
+        {
+            $connexion = new PDO(
+                "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
+                "root",
+                ""
+            );
+        }
+        catch(Exception $e)
+        {
+            die("Erreur: ".$e->getMessage());
+        }
 
-        $preparation = $connexion->prepare($deleteQ);
-        $preparation->execute();
+        $preparation = $connexion->prepare($selectQ);
+        $fetch = $preparation->fetchAll();
 
-        unset($this->id);
-        unset($this->login);
-        unset($this->password);
-        unset($this->email);
-        unset($this->droits);
+        if(!empty($fetch))
+        {
+            echo "Un utilisateur utilise déjà ce login ou cette adresse e-mail.";
+            return;
+        }
+        else
+        {
+            $preparation = $connexion->prepare($insertQ);
+            $fetch = $preparation->fetchAll();
+
+            $this->id = $fetch["id"];
+        }
     }
 }
 ?>
