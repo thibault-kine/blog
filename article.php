@@ -19,8 +19,26 @@ class Article
 
     public function register()
     {
-        $host = "localhost";
-        $dbname = "blog";
+        function getDatabase()
+        {
+            $host = "localhost";
+            $dbname = "blog";
+
+            try 
+            {
+                $connexion = new PDO(
+                    "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
+                    "root",
+                    ""
+                );
+            }
+            catch(Exception $e)
+            {
+                die("Erreur: ".$e->getMessage());
+            }
+
+            return $connexion;
+        }
 
         // mise en forme de l'article pour que cela rentre dans la bdd
         $fullarticle = $this->titre." - ".$this->article;
@@ -28,18 +46,7 @@ class Article
         $selectQ = "SELECT * FROM articles WHERE article='$fullarticle' OR date='$this->date'";
         $insertQ = "INSERT INTO articles(article, id_categorie, id_utilisateur, date) VALUES ('$fullarticle', '$this->id_categorie', '$this->id_utilisateur', '$this->date')";
 
-        try 
-        {
-            $connexion = new PDO(
-                "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
-                "root",
-                ""
-            );
-        }
-        catch(Exception $e)
-        {
-            die("Erreur: ".$e->getMessage());
-        }
+        $connexion = getDatabase();
 
         $preparation = $connexion->prepare($selectQ);
         $preparation->execute();
@@ -62,12 +69,30 @@ class Article
         $this->id = $fetch[0]["id"];
     }
 
-
     public function display()
     {
+        // récupère la catégorie
+        $selectQ = "SELECT * FROM categories WHERE id='$this->id_categorie'";
+        $connexion = getDatabase();
+        $preparation = $connexion->prepare($selectQ);
+        $preparation->execute();
+        $fetch = $preparation->fetchAll();
+
+        $categorie = $fetch[0]["nom"];
+
+        // récupère l'auteur
+        $selectQ = "SELECT * FROM utilisateurs WHERE id='$this->id_utilisateur'";
+        $connexion = getDatabase();
+        $preparation = $connexion->prepare($selectQ);
+        $preparation->execute();
+        $fetch = $preparation->fetchAll();
+
+        $auteur = $fetch[0]["login"];
+
         echo "
         <article>
             <h1>".$this->titre."</h1>
+            <p><b>Catégorie: ".$categorie." - Auteur: ".$auteur." - Publié le: ".$this->date."</b></p>
             <p>".$this->article."</p>
         </article>
         ";
