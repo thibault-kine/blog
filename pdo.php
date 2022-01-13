@@ -19,6 +19,7 @@ class User
     {
         $host = "localhost";
         $dbname = "blog";
+        $this->password->password_hash($this->password,PASSWORD_DEFAULT);
 
         $selectQ = "SELECT * FROM utilisateurs WHERE login='$this->login' OR email='$this->email'";
         $insertQ = "INSERT INTO utilisateurs(login, password, email, id_droits) VALUES ('$this->login', '$this->password', '$this->email', '$this->droits')";
@@ -51,6 +52,27 @@ class User
 
             $this->id = $fetch["id"];
         }
+    }
+    public function delete()
+    {
+        $host = "localhost";
+        $dbname = "blog";
+
+        $connexion = new pdo(
+            "mysql:host=".$host.";dbname".$dbname.";charset=utf8",
+            "root",
+            ""
+        );
+        $deleteQ = "DELETE FROM utilisateurs WHERE id='$this->id'";
+        
+        $preparation = $connexion->prepare($deleteQ);
+        $preparation->execute();
+
+        unset($this->id);
+        unset($this->login);
+        unset($this->password);
+        unset($this->email);
+        unset($this->droits);
     }
 }
 ?>
