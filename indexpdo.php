@@ -23,14 +23,19 @@ Passe-Partout, le porte-parole de l'AFLN (Association Française du Lancer de Na
 \"V'ai touvours été un amoureux de fe fport. F'est une difipline paffionnante. Après la fin de 
 l'émiffion Fort Boyard, ma reconverfion était affurée.\"</p>";
 
-$myArticle = new Article(
-    "Le lancer de nains est de retour ?",
+$bdd = new PDO(
+    "mysql:dbname=blog;host=localhost",
+    "root",
+    ""
+);
+
+$myArticle = new Article();
+$myArticle->register(
+    "Le lancer de nains revient-il à la mode ?",
     $article,
     $myCategorie->getID(),
     $admin->getID(),
     $today
 );
-$myArticle->register();
-
 $myArticle->display();
 ?>
