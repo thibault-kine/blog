@@ -87,5 +87,10 @@ class User
         unset($this->email);
         unset($this->droits);
     }
+
+    public function getID()
+    {
+        return $this->id;
+    }
 }
 ?>
