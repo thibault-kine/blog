@@ -1,5 +1,6 @@
 <?php
     include 'header.php';
+    require 'pdo.php';
 ?>
 
 
@@ -19,8 +20,8 @@
             <a href="connexion.php">Déjà inscrit?</a>
         </form>
     </div>
-
-
 <?php
+    $_SESSION['utilisateur']= new User($_POST['login'],$_POST['email'],$_POST['password']);
+
     include 'footer.php';
 ?>
