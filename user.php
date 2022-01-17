@@ -92,5 +92,10 @@ class User
     {
         return $this->id;
     }
+
+    public function getLogin()
+    {
+        return $this->login;
+    }
 }
 ?>
