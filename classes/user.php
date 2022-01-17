@@ -17,10 +17,11 @@ class User
 
     public function register()
     {
-        if(isset($this->login) && isset($this->email))
+        if(isset($this->login) && isset($this->email)) 
         {
             $host = "localhost";
             $dbname = "blog";
+            $this->password = password_hash($this->password, PASSWORD_DEFAULT);
 
             $selectQ = "SELECT * FROM utilisateurs WHERE login='$this->login' OR email='$this->email'";
             $insertQ = "INSERT INTO utilisateurs(login, password, email, id_droits) VALUES ('$this->login', '$this->password', '$this->email', '$this->droits')";
