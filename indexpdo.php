@@ -1,27 +1,17 @@
 <?php
-require("user.php");
-require("article.php");
-require("categorie.php");
+require("pdo.php");
 
-$admin = new User(
-    "admin",
-    "admin",
-    "admin@adminmail.com",
-    1337
+$myUser = new User(
+    "martin13",
+    "martinnn",
+    "martindu13@gmail.com"
 );
-$admin->register();
-var_dump($admin);
 
-$sports = new Categorie("Sports");
-$sports->register();
-var_dump($sports);
+$myUser->register();
 
-$myArticle = new Article(
-    "Titre",
-    "Hello world",
-    $admin->getID(),
-    $sports->getID(),
-);
-$myArticle->register();
-var_dump($myArticle);
+var_dump($myUser);
+
+$myUser->delete();
+
+var_dump($myUser);
 ?>

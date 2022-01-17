@@ -1,8 +1,3 @@
-<?php
-    session_start();
-    
-?>
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -17,6 +12,7 @@
     <header>
         <h1>BLOG</h1>
         <?php
+            session_start();
             if(empty($_SESSION))
             {
                 echo '<a href="connexion.php">Connexion</a>';
