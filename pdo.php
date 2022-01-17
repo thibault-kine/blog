@@ -17,7 +17,7 @@ class User
 
     public function register()
     {
-        if(isset($this->login) && isset($this->email))
+        if(isset($this->login) && isset($this->email)) 
         {
             $host = "localhost";
             $dbname = "blog";
@@ -88,5 +88,27 @@ class User
         unset($this->email);
         unset($this->droits);
     }
+
+
+    public function connect($login, $password)
+    {
+        $stmt = $this -> dbname -> prepare("SELECT * FROM `utilisateurs` WHERE login = :login");
+        $stmt->bindValue(':login', $login, PDO::PARAM_STR);
+        $stmt -> execute();
+        $reuser = $stmt -> fetchAll();
+        var_dump($reuser);
+        $_SESSION['connexionencours']=
+        [
+            'id'=> $reuser[0]["id"],
+            'login'=>  $reuser[0]["login"],
+            'password'=> $reuser[0]["password"],
+            'email' => $reuser[0]["email"]
+        ];
+      
+        $this->login = $login;
+        $this->password = $password;
+      
+    }
 }
+
 ?>

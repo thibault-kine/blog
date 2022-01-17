@@ -1,5 +1,6 @@
 <?php
     include 'header.php';
+    
 ?>
 
 
@@ -19,8 +20,30 @@
             <a href="connexion.php">Déjà inscrit?</a>
         </form>
     </div>
-
-
 <?php
+    if(!empty($_POST))
+    {
+        $login= $_POST['login'];
+        $email=$_POST['email'];
+        $password=$_POST['password'];
+        $passw2=$_POST['password2'];
+        
+
+        if(isset($login,$email,$password) && !empty($login) && !empty($email) && !empty($password) && $password == $passw2)
+        {
+            require 'pdo.php';
+            $user = new User($login,$password,$email);
+            $user->register();
+            header('location: connexion.php');
+        }
+        elseif(isset($login,$email,$password) && !empty($login) && !empty($email) && !empty($password) && $password != $passw2)
+        {
+            echo "Votre mot de passe est incorrect";
+        }
+    }
+    else
+    {
+        echo "un champ est vide";
+    }
     include 'footer.php';
 ?>
