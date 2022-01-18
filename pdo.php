@@ -88,24 +88,8 @@ class User
         unset($this->email);
         unset($this->droits);
     }
-
-
     public function connect($login, $password)
     {
-<<<<<<< HEAD
-        $stmt = $this -> dbname -> prepare("SELECT * FROM `utilisateurs` WHERE login = :login");
-        $stmt->bindValue(':login', $login, PDO::PARAM_STR);
-        $stmt -> execute();
-        $reuser = $stmt -> fetchAll();
-        var_dump($reuser);
-        $_SESSION['connexionencours']=
-        [
-            'id'=> $reuser[0]["id"],
-            'login'=>  $reuser[0]["login"],
-            'password'=> $reuser[0]["password"],
-            'email' => $reuser[0]["email"]
-        ];
-=======
         $host = "localhost";
         $dbname = "blog";
 
@@ -129,14 +113,11 @@ class User
         //     'password'=> $reuser[0]["password"],
         //     'email' => $reuser[0]["email"]
         // ];
->>>>>>> main
       
         $this->login = $login;
         $this->password = $password;
       
     }
-<<<<<<< HEAD
-=======
 
     public function getAllInfo() //sans param, retourne tableau avec infon user
     {
@@ -164,7 +145,7 @@ class User
         </tr>
     </tbody></table> ";
     }
->>>>>>> main
 }
 
 ?>
+
