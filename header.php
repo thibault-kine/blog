@@ -10,18 +10,22 @@
 </head>
 <body>
     <header>
-        <h1>BLOG</h1>
+        <a href="index.php"><h1>BLOG</h1></a>
+        
         <?php
             session_start();
             if(empty($_SESSION))
             {
+                echo '<div class="links">';
                 echo '<a href="connexion.php">Connexion</a>';
                 echo '<a href="inscription.php">Inscription</a>';
+                echo '</div>';
             }
             // acces admin
             elseif(!empty($_SESSION) && $_SESSION["droit"]["id"]!="1337")
             {
-                echo '<a href="index.php">Acceuil</a>';
+                echo '<div class="links">';
+                echo '<a href="index.php">Accueil</a>';
                 echo '<label for="">Catégories d\'article</label>
                 <select name="categorie">
                    <option valeur="cat1">Catégorie 1</option>
@@ -34,11 +38,12 @@
                 echo '<a href="creer-article.php">Creer un article</a>';
                 echo '<a href="admin.php">Administration</a>';
                 echo '<a href="deconnexion.php">Déconnexion</a>';
-
+                echo '</div>';
             }
             //acces modo
             elseif(!empty($_SESSION) && $_SESSION["droit"]["id"]!="42")
             {
+                echo '<div class="links">';
                 echo '<a href="index.php">Acceuil</a>';
                 echo '<label for="">Catégories d\'article</label>
                 <select name="categorie">
@@ -51,10 +56,12 @@
                 echo '<a href="profil.php">Profil</a>';
                 echo '<a href="creer-article.php">Creer un article</a>';
                 echo '<a href="deconnexion.php">Déconnexion</a>';
+                echo '</div>';
             }
             // acces user
             else
             {
+                echo '<div class="links">';
                 echo '<a href="index.php">Acceuil</a>';
                 echo '<label for="">Catégories d\'article</label>
                 <select name="categorie">
@@ -66,7 +73,7 @@
                 echo '<a href="articles.php">Articles</a>';
                 echo '<a href="profil.php">Profil</a>';
                 echo '<a href="deconnexion.php">Déconnexion</a>';
-
+                echo '</div>';
             }
         ?>      
         

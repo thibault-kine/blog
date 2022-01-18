@@ -68,19 +68,19 @@
         <div id="grplogo">
             <h6>fred</h6>
             <a href="https://github.com/frederick-sonder1/blog">
-                <img src="img/github2.png" alt="github logo" id="logo1">
+                <img src="img/github.png" alt="github logo" class="logo1">
             </a>
             <a href="mailto:frederick.sonder@laplateforme.io">                    
-                <img src="img/mail2.png" alt="image mail" id="logo2">
+                <img src="img/mail2.png" alt="image mail" class="logo2">
             </a>
         </div>
         <div id="grplogo">
             <h6>thibault</h6>
             <a href="https://github.com/thibault-kine/blog">
-                <img src="img/github2.png" alt="github logo" id="logo1">
+                <img src="img/github.png" alt="github logo" class="logo1">
             </a>
             <a href="mailto:thibault-kine@laplateforme.io">                    
-                <img src="img/mail2.png" alt="image mail" id="logo2">
+                <img src="img/mail2.png" alt="image mail" class="logo2">
             </a>
         </div>
     </footer>

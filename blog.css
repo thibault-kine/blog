@@ -1,4 +1,4 @@
-/* ------------- header ---------------- */
+/* ------------- header ----------------
 
 header{
     display: flex;
@@ -11,7 +11,7 @@ header{
 
 /* ------------- main -------------- */
 
-main{
+/* main{
     align-items: center;
 }
 .form, form{
@@ -19,12 +19,12 @@ main{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
+} */
 
 
 /* -------------- footer ------------ */
 
-footer{
+/* footer{
     display: flex; 
     justify-content: space-around;
     align-items: flex-end;
@@ -45,4 +45,24 @@ footer{
     width: 100vw;
     border: pink solid;
 }
+ */
 
+
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+header, footer
+{
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+footer img
+{
+    width: 3vw;
+}
