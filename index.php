@@ -1,9 +1,8 @@
 <?php
     include 'header.php';
 ?>
-<?php 
-    require_once 'pdo.php';
 
+<<<<<<< HEAD
 // public function article()
 // {
 //     $selec = "SELECT * FROM `articles` ";
@@ -13,7 +12,11 @@
 // }
 var_dump($_SESSION);
 ?>
+=======
+>>>>>>> main
 
+<h1>BIENVENUE SUR NOTRE BLOG</h1>
+<p>Ici vous pourrez decouvrir plein d'articles ecrit par nos soins</p>
 
 
 

@@ -89,82 +89,15 @@ class User
         unset($this->droits);
     }
 
-
-    public function connect($login, $password)
+    public function getID()
     {
-<<<<<<< HEAD
-        $stmt = $this -> dbname -> prepare("SELECT * FROM `utilisateurs` WHERE login = :login");
-        $stmt->bindValue(':login', $login, PDO::PARAM_STR);
-        $stmt -> execute();
-        $reuser = $stmt -> fetchAll();
-        var_dump($reuser);
-        $_SESSION['connexionencours']=
-        [
-            'id'=> $reuser[0]["id"],
-            'login'=>  $reuser[0]["login"],
-            'password'=> $reuser[0]["password"],
-            'email' => $reuser[0]["email"]
-        ];
-=======
-        $host = "localhost";
-        $dbname = "blog";
-
-        $connexion = new PDO(
-            "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
-            "root",
-            ""
-        );
-
-        $slctconn = "SELECT * FROM `utilisateurs` WHERE login = :login";
-        $stmt =  $connexion -> prepare($slctconn);
-        $stmt->bindValue(':login', $login, PDO::PARAM_STR);
-        $stmt -> execute();
-        $reuser = $stmt -> fetch(PDO::FETCH_ASSOC);
-        $hash = $reuser['password'];
-        var_dump($reuser);
-        // $_SESSION['connexionencours']=
-        // [
-        //     'id'=> $reuser[0]["id"],
-        //     'login'=>  $reuser[0]["login"],
-        //     'password'=> $reuser[0]["password"],
-        //     'email' => $reuser[0]["email"]
-        // ];
->>>>>>> main
-      
-        $this->login = $login;
-        $this->password = $password;
-      
+        return $this->id;
     }
-<<<<<<< HEAD
-=======
 
-    public function getAllInfo() //sans param, retourne tableau avec infon user
+    public function getLogin()
     {
-        $selec = "SELECT * FROM `utilisateurs` WHERE `login` = :login";
-        $login1 = $_POST;
-        $id2 = $this -> bdd -> prepare($selec);
-        $id2->bindValue(':login', $login1, PDO ::PARAM_STR);
-        $id2->execute();
-        $user = $id2->fetchAll();
-        $login = $user['login'];
-        $password = $user['password'];
-        $email = $user['email'];
-
-
-        echo "<table><thead>
-        <th>Login</th>
-        <th>Password</th>
-        <th>Email</th>
-    </thead>
-    <tbody>
-        <tr>
-        <td>'$login'</td>
-        <td>'$password'</td>
-        <td>'$email'</td>
-        </tr>
-    </tbody></table> ";
+        return $this->login;
     }
->>>>>>> main
+    
 }
-
 ?>
