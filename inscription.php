@@ -21,20 +21,25 @@
         </form>
     </div>
 <?php
-    if(!empty($_POST))
+    if($_SESSION)
     {
+        header("Location:index.php");
+        exit();
+    }
+    elseif(!empty($_POST))
+    {  
+        require 'classes/user.php';
         $login= $_POST['login'];
         $email=$_POST['email'];
         $password=$_POST['password'];
         $passw2=$_POST['password2'];
         
-
         if(isset($login,$email,$password) && !empty($login) && !empty($email) && !empty($password) && $password == $passw2)
         {
-            require 'pdo.php';
-            $user = new User($login,$password,$email);
-            $user->register();
+            $user = new User();
+            $user->register($login,$password,$email);
             header('location: connexion.php');
+            exit();
         }
         elseif(isset($login,$email,$password) && !empty($login) && !empty($email) && !empty($password) && $password != $passw2)
         {

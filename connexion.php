@@ -12,49 +12,46 @@
         <input type="submit" value="submit">
     </form>
 <?php
-    require ('classes/user.php');
-    if(!empty($_POST))
+    if($_SESSION)
+    {
+        header("Location:profil.php");
+    }
+    elseif(!empty($_POST))
     {   
+        require ('classes/user.php');
+        
         $login= $_POST['login'];
         $password=$_POST['password'];
-        // $email= $_POST['email'];
-
-        if(isset($login,$password) && !empty($login) && !empty($password))
-        {
-            require("classe/user.php");
-            $user = new User($login,$password,$email);
-            $user ->connect($login,$password);
-            
-            // var_dump($user);
-            // $login= ($_POST['login']);
-            // $password=($_POST['password']);
-            // $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8','root','');
-            // $slct = "SELECT * FROM `utilisateurs` WHERE `login`='$login'";
-            // $prep = $bdd->prepare($slct);
-            // $prep ->execute();
-            // $utilisateur = $prep -> fetchAll();
-
-            if(password_verify($password, $hash))
+        
+        if(isset($login,$password))
+        {   
+            $user = new User();
+            if($reuser["id"]=1337)
             {
-                $_SESSION['login'] = $user['login'];
-                header('Location: admin.php');
-                exit();
-            }    
-                
-            else
-            {
-                $_SESSION['utilisateur'] = $utilisateur;
-                header('Location: profil.php');
+                $user ->connect($login,$password);
+                header('Location:profil.php');
                 exit();
             }
+            elseif($reuser["id"]=42)
+            {
+                $user ->connect($login,$password);
+                header('location: profil.php');
+                exit();
+            }
+            else
+            {
+                $user ->connect($login,$password);
+                header('Location:profil.php');
+                exit();
+            }
+            var_dump($reuser);
         }
 
         else
         {
             echo "votre mot de passe est incorrect.";
         }
-        }
-    var_dump($_SESSION);
+    }
 ?>
 
 <?php
