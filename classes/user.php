@@ -7,16 +7,17 @@ class User
     public $email;
     public $droits;
 
-    public function __construct($_login, $_password, $_email, $_droits = 1)
+    public function __construct()
+    {
+        
+    }
+
+    public function register($_login, $_password, $_email, $_droits = 1)
     {
         $this->login    = $_login;
         $this->password = $_password;
         $this->email    = $_email;
         $this->droits   = $_droits;
-    }
-
-    public function register()
-    {
         if(isset($this->login) && isset($this->email)) 
         {
             $host = "localhost";
@@ -101,6 +102,7 @@ class User
 
     public function connect($login, $password)
     {
+        
         $host = "localhost";
         $dbname = "blog";
 
@@ -115,26 +117,42 @@ class User
         $stmt->bindValue(':login', $login, PDO::PARAM_STR);
         $stmt -> execute();
         $reuser = $stmt -> fetch(PDO::FETCH_ASSOC);
-        $hash = $reuser['password'];
-        var_dump($reuser);
-        // $_SESSION['connexionencours']=
-        // [
-        //     'id'=> $reuser[0]["id"],
-        //     'login'=>  $reuser[0]["login"],
-        //     'password'=> $reuser[0]["password"],
-        //     'email' => $reuser[0]["email"]
-        // ];
-      
-        $this->login = $login;
-        $this->password = $password;
-      
+
+        if (count($reuser) > 0)
+        {
+            if(password_verify($password,$reuser['password']))
+            {
+                $_SESSION["utilisateur"]=
+                [
+                    'id'=> $reuser[0]["id"],
+                    'login'=>  $reuser[0]["login"],
+                    'password'=> $reuser[0]["password"],
+                    'email' => $reuser[0]["email"]
+                ];
+                header('Location: profil.php');
+                exit();
+            }
+            else
+            {
+                echo "mot de passe incorrect!";
+            }
+        }     
     }
 
     public function getAllInfo() //sans param, retourne tableau avec infon user
     {
+        $host = "localhost";
+        $dbname = "blog";
+
+        $connexion = new PDO(
+            "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
+            "root",
+            ""
+        );
+
         $selec = "SELECT * FROM `utilisateurs` WHERE `login` = :login";
-        $login1 = $_POST;
-        $id2 = $this -> bdd -> prepare($selec);
+        $login1 = $_POST['login'];
+        $id2 = $connexion -> prepare($selec);
         $id2->bindValue(':login', $login1, PDO ::PARAM_STR);
         $id2->execute();
         $user = $id2->fetchAll();
@@ -150,9 +168,9 @@ class User
     </thead>
     <tbody>
         <tr>
-        <td>'$login'</td>
-        <td>'$password'</td>
-        <td>'$email'</td>
+        <td>".$login."</td>
+        <td>".$password."</td>
+        <td>".$email."</td>
         </tr>
     </tbody></table> ";
     }

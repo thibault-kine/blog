@@ -3,32 +3,6 @@
         <div>
             <h3>navigation</h3>
             <?php
-                $host = "localhost";
-                $user = "root";
-                $bdd = "blog";
-                $pass = "";
-                $conn = new PDO("mysql:host=".$host.";dbname=".$bdd.";charset=utf8",
-                "root",
-                ""
-                );
-
-                try
-                {
-                    $conn ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    echo 'connexion établie';
-                }
-                catch(PDOException $e)
-                {
-                    echo 'Erreur: '.$e->getMessage();
-                }
-
-                $slct = "SELECT * FROM `utilisateurs` INNER JOIN `droits`";
-                $prepaslct = $conn -> prepare($slct);
-                $result = $prepaslct -> execute();
-                // var_dump($result);
-                // $result -> FETCH_ASSOC();
-
-
             if(empty($_SESSION))
             {
                 echo '<a href="connexion.php">Connexion</a>';
