@@ -1,3 +1,8 @@
+
+<?php
+    session_start();
+    
+?>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -63,6 +68,7 @@
                    <option valeur="cat3">Catégorie 3</option>
                    <option valeur="cat4">Catégorie 3</option>
                 </select>';
+
                 echo '<a href="articles.php">Articles</a>';
                 echo '<a href="profil.php">Profil</a>';
                 echo '<a href="deconnexion.php">Déconnexion</a>';
