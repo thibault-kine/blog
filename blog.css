@@ -1,0 +1,48 @@
+/* ------------- header ---------------- */
+
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: cornsilk;
+    padding-top: 2vh;
+}
+
+
+/* ------------- main -------------- */
+
+main{
+    align-items: center;
+}
+.form, form{
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* -------------- footer ------------ */
+
+footer{
+    display: flex; 
+    justify-content: space-around;
+    align-items: flex-end;
+    border: crimson solid;
+}
+
+#lienperso{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border: blue solid
+}
+#grplogo{
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    height: 10vh;
+    width: 100vw;
+    border: pink solid;
+}
+
