@@ -117,20 +117,27 @@ class User
         $stmt->bindValue(':login', $login, PDO::PARAM_STR);
         $stmt -> execute();
         $reuser = $stmt -> fetch(PDO::FETCH_ASSOC);
+        echo "var_dump de $reuser";
+        var_dump($reuser);
 
         if (count($reuser) > 0)
         {
             if(password_verify($password,$reuser['password']))
             {
-                $_SESSION["utilisateur"]=
-                [
-                    'id'=> $reuser[0]["id"],
-                    'login'=>  $reuser[0]["login"],
-                    'password'=> $reuser[0]["password"],
-                    'email' => $reuser[0]["email"]
-                ];
+                // le code ne peut pas checker si la variable de session est vide (ou null)
+                // si il y a au moins un index renseigné (en l'occurrence, là c'était $_SESSION["utilisateur"])
+                // les index de ["utilisateur"] étaient vides mais puisque $_SESSION["utilisateur"] avait une valeur, le code pense qu'il n'est pas null
+                // $_SESSION/*["utilisateur"]*/=
+                // [
+                //     'id'=> $reuser[0]["id"],
+                //     'login'=>  $reuser[0]["login"],
+                //     'password'=> $reuser[0]["password"],
+                //     'email' => $reuser[0]["email"],
+                //     'droits' => $reuser[0]["id_droits"]
+                // ];
                 header('Location: profil.php');
-                exit();
+                return $reuser;
+                // exit();
             }
             else
             {

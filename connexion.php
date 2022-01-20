@@ -12,6 +12,8 @@
         <input type="submit" value="submit">
     </form>
 <?php
+var_dump($_SESSION);
+
     if($_SESSION)
     {
         header("Location:profil.php");
@@ -26,25 +28,35 @@
         if(isset($login,$password))
         {   
             $user = new User();
-            if($reuser["id"]=1337)
+            if($reuser[0]["id"]=1337)
             {
-                $user ->connect($login,$password);
-                header('Location:profil.php');
+                $connect = $user ->connect($login,$password);
+                // ça ne sert a rien d'utiliser le header ici puisque tu l'utilises déjà dans la méthode connect
+                // header('Location:profil.php');
                 exit();
             }
-            elseif($reuser["id"]=42)
+            elseif($reuser[0]["id"]=42)
             {
-                $user ->connect($login,$password);
-                header('location: profil.php');
+                $connect = $user ->connect($login,$password);
+                // header('location: profil.php');
                 exit();
             }
             else
             {
-                $user ->connect($login,$password);
-                header('Location:profil.php');
+                $connect = $user ->connect($login,$password);
+                // header('Location:profil.php');
                 exit();
             }
-            var_dump($reuser);
+            
+            
+                $_SESSION["id"] = $connect[0]["id"];
+                $_SESSION["login"] = $connect[0]["login"];
+                $_SESSION["password"] = $connect[0]["password"];
+                $_SESSION["email"] = $connect[0]["email"];
+                $_SESSION["droits"] = $connect[0]["id_droits"];
+            
+
+            header("location: profil.php");
         }
 
         else
