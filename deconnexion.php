@@ -1,6 +1,7 @@
 <?php
     include "header.php";
-    session_destroy();
+    unset($_SESSION['utilisateur']);
+    // session_destroy();
     header('Location: index.php');
                 exit();
 ?>

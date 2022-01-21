@@ -1,5 +1,51 @@
 <?php
     include 'header.php';
+
+    //  var_dump($_SESSION);
+require ('classes/user.php');
+
+$user=new User();
+    if(empty($_POST))
+    {
+        echo "veuillez vous connecter!";
+    }
+    else
+    {
+        // var_dump($_POST);
+
+    if(!empty($_POST['login']) && !empty($_POST['password']) && isset($_POST['login']) && isset($_POST['password']))
+    {   
+        $login=$_POST['login'];
+        $password=$_POST['password'];
+        echo $login;
+        echo $password;
+        echo '<br>';
+        
+        $user->connect($login,$password);
+    
+             var_dump($_SESSION["utilisateur"]);
+            if(!empty($_SESSION["utilisateur"]) && isset($_SESSION["utilisateur"]))
+            {
+
+                if($_SESSION["utilisateur"]["id"]==1337 )
+                {
+                    header('Location:admin.php');
+                    exit();
+                    
+                }
+                elseif($_SESSION["utilisateur"]["id"]==42)
+                {
+                    header('location: articles.php');
+                    exit();    
+                }
+                else
+                {
+                    header('Location:index.php');
+                    exit();
+                }
+            }    
+    }
+}
    
 ?>
 
@@ -11,48 +57,7 @@
         <input type="password" name="password" id="password">
         <input type="submit" value="submit">
     </form>
-<?php
-    if($_SESSION)
-    {
-        header("Location:profil.php");
-    }
-    elseif(!empty($_POST))
-    {   
-        require ('classes/user.php');
-        
-        $login= $_POST['login'];
-        $password=$_POST['password'];
-        
-        if(isset($login,$password))
-        {   
-            $user = new User();
-            if($reuser["id"]=1337)
-            {
-                $user ->connect($login,$password);
-                header('Location:profil.php');
-                exit();
-            }
-            elseif($reuser["id"]=42)
-            {
-                $user ->connect($login,$password);
-                header('location: profil.php');
-                exit();
-            }
-            else
-            {
-                $user ->connect($login,$password);
-                header('Location:profil.php');
-                exit();
-            }
-            var_dump($reuser);
-        }
 
-        else
-        {
-            echo "votre mot de passe est incorrect.";
-        }
-    }
-?>
 
 <?php
     include 'footer.php';

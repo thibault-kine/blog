@@ -4,11 +4,16 @@
 ?>
 
 <h1>Profil</h1>
-<?php var_dump($_SESSION) ?>
 <p>Bonjour <?php echo $_SESSION["utilisateur"]["login"] ?></p>
 <p>Ici vous pouvez modifier vore profil</p>
 
 <?php
+    var_dump($_SESSION['utilisateur']);
+    if(!$_SESSION)
+    {
+        header("Location:index.php");
+    }
+
     // getAllInfo(){
     // }
 ?>
