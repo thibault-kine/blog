@@ -18,7 +18,6 @@ class User
         $this->password = $_password;
         $this->email    = $_email;
         $this->droits   = $_droits;
-
         if(isset($this->login) && isset($this->email)) 
         {
             $host = "localhost";
@@ -103,6 +102,7 @@ class User
 
     public function connect($login, $password)
     {
+        
         $host = "localhost";
         $dbname = "blog";
 
@@ -112,63 +112,31 @@ class User
             ""
         );
 
-        $selectQ = "SELECT * FROM utilisateurs WHERE login=:login";
-        $stmt = $connexion->prepare($selectQ);
-        $stmt->bindValue(":login", $login);
-        $stmt->execute();
+        $slctconn = "SELECT * FROM `utilisateurs` WHERE login = :login";
+        $stmt =  $connexion -> prepare($slctconn);
+        $stmt->bindValue(':login', $login, PDO::PARAM_STR);
+        $stmt -> execute();
+        $reuser = $stmt -> fetch(PDO::FETCH_ASSOC);
 
-        $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        if(!empty($fetch) && !isset($_SESSION))
+        if (count($reuser) > 0)
         {
-            if(password_verify($password, $fetch["password"]))
+            if(password_verify($password,$reuser['password']))
             {
-                $_SESSION["id"] = $fetch["id"];
-                $_SESSION["login"] = $fetch["login"];
-                $_SESSION["password"] = $fetch["password"];
-                $_SESSION["email"] = $fetch["email"];
-                $_SESSION["droits"] = $fetch["id_droits"];
+                $_SESSION["utilisateur"]=
+                [
+                    'id'=> $reuser[0]["id"],
+                    'login'=>  $reuser[0]["login"],
+                    'password'=> $reuser[0]["password"],
+                    'email' => $reuser[0]["email"]
+                ];
+                header('Location: profil.php');
+                exit();
             }
-        }
-        else
-        {
-            return;
-        }
-
-
-        // $slctconn = "SELECT * FROM `utilisateurs` WHERE login = :login";
-        // $stmt =  $connexion -> prepare($slctconn);
-        // $stmt->bindValue(':login', $login, PDO::PARAM_STR);
-        // $stmt -> execute();
-        // $reuser = $stmt -> fetch(PDO::FETCH_ASSOC);
-
-        // $_SESSION["utilisateur"]=
-        //         [
-        //             'id'=> $reuser[0]["id"],
-        //             'login'=>  $reuser[0]["login"],
-        //             'password'=> $reuser[0]["password"],
-        //             'email' => $reuser[0]["email"],
-        //             'droits' => $reuser[0]["id_droits"]
-        //         ];
-
-        // if (count($reuser) > 0)
-        // {
-            
-
-        //     if(password_verify($password,$reuser['password']))
-        //     // {
-        //     //     // le code ne peut pas checker si la variable de session est vide (ou null)
-        //     //     // si il y a au moins un index renseigné (en l'occurrence, là c'était $_SESSION["utilisateur"])
-        //     //     // les index de ["utilisateur"] étaient vides mais puisque $_SESSION["utilisateur"] avait une valeur, le code pense qu'il n'est pas null
-                
-        //     //     // header('Location: profil.php');
-        //     //     // exit();
-        //     }
-        //     else
-        //     {
-        //         echo "mot de passe incorrect!";
-        //     }
-        // }     
+            else
+            {
+                echo "mot de passe incorrect!";
+            }
+        }     
     }
 
     public function getAllInfo() //sans param, retourne tableau avec infon user

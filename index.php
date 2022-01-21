@@ -16,7 +16,7 @@
 //             $exec ->execute();
 //             $arti = $exec->fetchAll();
 //         }
-var_dump($_SESSION);
+// var_dump($_SESSION);
 
 ?>
 
