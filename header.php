@@ -5,15 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="blog.css">
+    <!-- <link rel="stylesheet" href="blog.css"> -->
     <title>BLOG</title>
 </head>
 <body>
     <header>
         <h1>BLOG</h1>
         <?php
-            session_start();
+        session_start();
+
             if(empty($_SESSION))
+
             {
                 echo '<a href="connexion.php">Connexion</a>';
                 echo '<a href="inscription.php">Inscription</a>';
