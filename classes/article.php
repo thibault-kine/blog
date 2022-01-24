@@ -18,7 +18,7 @@ class Article
     public function register()
     {
         date_default_timezone_set("Europe/Paris");
-        $today = date("Y-m-d");
+        $today = time("Y-m-d h:m:s");
 
         $this->date = $today;
 
@@ -34,7 +34,7 @@ class Article
         $id_auteur = $this->id_auteur;
         $id_categorie = $this->id_categorie;
 
-        $stmt = $pdo->prepare("SELECT * FROM `articles` WHERE `article`='.$article.'");
+        $stmt = $pdo->prepare("SELECT * FROM `articles` WHERE `article`='$article'");
         $stmt->execute();
         $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -50,11 +50,11 @@ class Article
             $pdo->prepare("INSERT INTO `articles`(`article`, `id_utilisateur`, `id_categorie`, `date`) VALUES ('.$article.', '.$id_auteur.', '.$id_categorie.', CURRENT_TIMESTAMP)")->execute();
         }
 
-        $stmt = $pdo->prepare("SELECT `id` FROM `articles` WHERE `article`='.$article.'");
+        $stmt = $pdo->prepare("SELECT * FROM `articles` WHERE `article`='.$article.'");
         $stmt->execute();
         $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $this->id = $fetch[0]["id"];
+        $this->id = $fetch["id"];
     }
 
     public function display()
@@ -85,13 +85,13 @@ class Article
         }
 
         // récupère la catégorie
-        $selectQ = "SELECT `nom` FROM `categories` WHERE `id`='$this->id_categorie'";
+        $selectQ = "SELECT * FROM `categories` WHERE `id`='$this->id_categorie'";
         $prep = $connexion->prepare($selectQ);
         $prep->execute();
-        $fetch = $prep->fetchAll();
+        $fetch = $prep->fetchAll(PDO::FETCH_ASSOC);
         if(!empty($fetch))
         {
-            $categorie = $fetch[0]["nom"];
+            $categorie = $fetch["nom"];
         }
 
         echo "
@@ -115,6 +115,21 @@ class Article
     public function getArticle()
     {
         return $this->article;
+    }
+
+    public function getAuthorID()
+    {
+        return $this->id_auteur;
+    }
+
+    public function getCategoryID()
+    {
+        return $this->id_categorie;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
     }
 }
 ?>
