@@ -1,4 +1,5 @@
 <?php
+// session_start();
 class User
 {
     private $id;
@@ -9,7 +10,11 @@ class User
 
     public function __construct()
     {
-        
+        // $bdd = new PDO('mysql:host=localhost;dbname=blog','root','');
+        // $bdd-> setAttribute(PDO :: ATTR_ERRMODE, PDO :: ERRMODE_EXCEPTION);
+        // $bdd-> setAttribute(PDO :: ATTR_DEFAULT_FETCH_MODE, PDO :: FETCH_ASSOC);
+        // $this-> bdd = $bdd;
+        // return $this-> bdd;
     }
 
     public function register($_login, $_password, $_email, $_droits = 1)
@@ -112,25 +117,25 @@ class User
             ""
         );
 
-        $slctconn = "SELECT * FROM `utilisateurs` WHERE login = :login";
-        $stmt =  $connexion -> prepare($slctconn);
-        $stmt->bindValue(':login', $login, PDO::PARAM_STR);
-        $stmt -> execute();
-        $reuser = $stmt -> fetch(PDO::FETCH_ASSOC);
+        $slctconn = "SELECT * FROM `utilisateurs` WHERE login = ?";
+        $stmt=$connexion->prepare($slctconn);
+        $stmt->bindValue(1, $login, PDO::PARAM_STR);
+        $stmt->execute();
+        $reuser=$stmt->fetchAll();
 
         if (count($reuser) > 0)
         {
-            if(password_verify($password,$reuser['password']))
+            if(password_verify($password,$reuser[0]['password']) || $password==$reuser[0]['password'])
             {
                 $_SESSION["utilisateur"]=
                 [
-                    'id'=> $reuser[0]["id"],
+                    'id'=>$reuser[0]['id'],
+                    'idd'=> $reuser[0]["id_droits"],
                     'login'=>  $reuser[0]["login"],
                     'password'=> $reuser[0]["password"],
                     'email' => $reuser[0]["email"]
                 ];
-                header('Location: profil.php');
-                exit();
+                // var_dump($_SESSION["utilisateur"]);
             }
             else
             {
@@ -175,5 +180,35 @@ class User
     </tbody></table> ";
     }
     
+    public function update($login,$password,$email)
+    {
+        $this->login = $login;
+        $this->password = $password;
+        $password = password_hash($this->password, PASSWORD_DEFAULT);
+        $this->email    = $email;
+        $iduser = $_SESSION['utilisateur']['id'];
+        echo $iduser;
+        $host = "localhost";
+        $dbname = "blog";
+        $connexion = new PDO(
+            "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
+            "root",
+            ""
+        );
+        $up = "UPDATE `utilisateurs` SET `login`='$login',`email`='$email',`password`='$password' WHERE `id`=:iduser";
+        // $upda = "SELECT * FROM `utilisateurs` WHERE `id`=$_SESSION[id]";
+        $update=$connexion->prepare($up);
+        $update->bindValue( ':iduser', $iduser, PDO::PARAM_STR);
+        $update->execute();
+        $_SESSION['utilisateur']['login']=$login;
+        $_SESSION['utilisateur']['email']=$email;
+        $_SESSION['utilisateur']['password']=$password;
+    }
 }
+// $user= new User();
+// $user->connect('frdk10','mdp10');
+// $user->update('frdk10','mdp100','email@email.com');
+
+
+// $user->connect('admin','admin');
 ?>

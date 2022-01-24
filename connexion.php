@@ -1,9 +1,6 @@
 <?php
     include 'header.php';
-
-    //  var_dump($_SESSION);
 require ('classes/user.php');
-
 $user=new User();
     if(empty($_POST))
     {
@@ -11,29 +8,20 @@ $user=new User();
     }
     else
     {
-        // var_dump($_POST);
-
     if(!empty($_POST['login']) && !empty($_POST['password']) && isset($_POST['login']) && isset($_POST['password']))
     {   
         $login=$_POST['login'];
         $password=$_POST['password'];
-        echo $login;
-        echo $password;
-        echo '<br>';
-        
         $user->connect($login,$password);
-    
-             var_dump($_SESSION["utilisateur"]);
             if(!empty($_SESSION["utilisateur"]) && isset($_SESSION["utilisateur"]))
             {
-
-                if($_SESSION["utilisateur"]["id"]==1337 )
+                if($_SESSION["utilisateur"]["idd"]==1337 )
                 {
                     header('Location:admin.php');
                     exit();
                     
                 }
-                elseif($_SESSION["utilisateur"]["id"]==42)
+                elseif($_SESSION["utilisateur"]["idd"]==42)
                 {
                     header('location: articles.php');
                     exit();    

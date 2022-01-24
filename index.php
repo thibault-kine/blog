@@ -8,6 +8,7 @@
 <p>Ici vous pourrez decouvrir plein d'articles ecrit par nos soins</p>
 
 <?php
+var_dump($_SESSION);
     require "classes/article.php";
 //     public function article()
 //         {

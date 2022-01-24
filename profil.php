@@ -1,6 +1,6 @@
 <?php
     include 'header.php';
-    include 'classes/user.php';
+    require 'classes/user.php';
 ?>
 
 <h1>Profil</h1>
@@ -8,14 +8,11 @@
 <p>Ici vous pouvez modifier vore profil</p>
 
 <?php
-    var_dump($_SESSION['utilisateur']);
     if(!$_SESSION)
     {
         header("Location:index.php");
     }
 
-    // getAllInfo(){
-    // }
 ?>
 
 <form action="" method="post">
@@ -30,8 +27,19 @@
             <input type="submit" value="submit" name="submit">
 </form>
 
-
-
 <?php
+    if(!empty($_POST))
+    { 
+        $login= $_POST['login'];
+        $email= $_POST['email'];
+        $password=$_POST['password'];
+        $id=$_SESSION['utilisateur']['id'];
+        $user=new User;
+        $user->update($login,$password,$email);
+        
+        header('location:profil.php');
+        exit();
+    }
+    var_dump($_SESSION);
     include 'footer.php';
 ?>
