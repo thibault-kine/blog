@@ -6,6 +6,7 @@ class Article
     public $article;
     public $id_auteur;
     public $id_categorie;
+    public $date;
 
     public function __construct($titre, $article, $id_auteur, $id_categorie)
     {
@@ -17,11 +18,6 @@ class Article
 
     public function register()
     {
-        date_default_timezone_set("Europe/Paris");
-        $today = time("Y-m-d h:m:s");
-
-        $this->date = $today;
-
         $host   = "localhost";
         $dbname = "blog";
         $user   = "root";
@@ -38,6 +34,9 @@ class Article
         $stmt->execute();
         $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        echo "1er fetch";
+        var_dump($fetch);
+
         // si un article existe déjà
         if(!empty($fetch))
         {
@@ -47,14 +46,18 @@ class Article
         // sinon
         else
         {
-            $pdo->prepare("INSERT INTO `articles`(`article`, `id_utilisateur`, `id_categorie`, `date`) VALUES ('.$article.', '.$id_auteur.', '.$id_categorie.', CURRENT_TIMESTAMP)")->execute();
+            $pdo->prepare("INSERT INTO `articles`(`article`, `id_utilisateur`, `id_categorie`, `date`) VALUES ('$article', '$id_auteur', '$id_categorie', CURRENT_TIMESTAMP)")->execute();
+            
+            $stmt = $pdo->prepare("SELECT * FROM `articles` WHERE `article`='$article'");
+            $stmt->execute();
+            $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            echo "2e fetch";
+            var_dump($fetch);
+
+            $this->id = $fetch[0]["id"];
+            $this->date = $fetch[0]["date"];
         }
-
-        $stmt = $pdo->prepare("SELECT * FROM `articles` WHERE `article`='.$article.'");
-        $stmt->execute();
-        $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $this->id = $fetch["id"];
     }
 
     public function display()

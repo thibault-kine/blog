@@ -30,7 +30,7 @@ require "classes/categorie.php";
         // Fait le tour des catégories existantes et les ajoute dans le select
         foreach($fetch as $categorie)
         {
-            echo "<option value='".$categorie["nom"]."'>".$categorie["nom"]."</option>";
+            echo "<option value='".$categorie["id"]."'>".$categorie["nom"]."</option>";
         }
         ?>
     </select>
@@ -42,44 +42,31 @@ require "classes/categorie.php";
 </form>
 
 <?php
-var_dump($_SESSION);
+
 
 // Si le formulaire n'est pas vide
 if(!empty($_POST["titre"]) && !empty($_POST["article"]))
 {
     // Si la catégorie sélectionnée n'est pas celle par défault, et que l'utilisateur possède les droits
-    if($_POST["catégorie"] != "default" && $_SESSION["utilisateur"]["idd"] == "1337" || $_SESSION["utilisateur"]["idd"] = "42")
+    if($_POST["catégorie"] != "default" && ($_SESSION["utilisateur"]["idd"] == "1337" || $_SESSION["utilisateur"]["idd"] = "42"))
     {
-        $selectQuery = "SELECT * FROM categories WHERE nom=:nom";
-        $stmt = $connexion->prepare($selectQuery);
-        $stmt->bindValue("nom", $_POST["categorie"]);
-        $stmt->execute();
-        $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
         $article = new Article(
             $_POST["titre"], // le titre du formulaire
             $_POST["article"], // le corps de l'article (balise <textarea>)
             $_SESSION["utilisateur"]["id"], // l'id de l'user qui a écrit l'article
-            $fetch["id"] // l'id de la catégorie
+            $_POST["categorie"] // l'id de la categorie
         );
         
         if($_POST["submit"])
         {
             $article->register(); // renseigne l'article dans la bdd
-    
-            $_SESSION["current-article"] = [
-                "id" => $article->getID(),
-                "titre" => $article->getTitle(),
-                "article" => $article->getArticle(),
-                "auteur" => $article->getAuthorID(),
-                "categorie" => $fetch["id"]
-            ];
 
-            header("location: voir-article.php");
+            $_SESSION["current-article"] = $article;
         }
     }
 }
 
+var_dump($_SESSION);
 
 include "footer.php";
 ?>
