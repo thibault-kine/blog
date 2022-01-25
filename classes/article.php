@@ -34,8 +34,8 @@ class Article
         $stmt->execute();
         $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        echo "1er fetch";
-        var_dump($fetch);
+        // echo "1er fetch";
+        // var_dump($fetch);
 
         // si un article existe déjà
         if(!empty($fetch))
@@ -52,15 +52,15 @@ class Article
             $stmt->execute();
             $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            echo "2e fetch";
-            var_dump($fetch);
+            // echo "2e fetch";
+            // var_dump($fetch);
 
             $this->id = $fetch[0]["id"];
             $this->date = $fetch[0]["date"];
         }
     }
 
-    public function display()
+    public function display($date)
     {
         $host = "localhost";
         $dbname = "blog";
@@ -99,9 +99,9 @@ class Article
 
         echo "
         <article>
-            <h1>".$this->titre."</h1>
-            <p><b>Posté le ".$this->date." par ".$auteur." - Catégorie ".$categorie."</b></p>
-            <p>".$this->article."</p>
+            <h1>'$this->titre'</h1>
+            <p><b>Posté le '$date' par '$auteur' - Catégorie '$categorie'</b></p>
+            <p>'$this->article'</p>
         </article>";
     }
 

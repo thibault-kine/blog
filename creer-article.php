@@ -62,6 +62,8 @@ if(!empty($_POST["titre"]) && !empty($_POST["article"]))
             $article->register(); // renseigne l'article dans la bdd
 
             $_SESSION["current-article"] = $article;
+
+            header("location: voir-article.php");
         }
     }
 }
