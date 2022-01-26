@@ -1,5 +1,15 @@
 <?php
     include 'header.php';
+
+    // require "classes/user.php";
+
+    // $admin = new User();
+    // $admin->register(
+    //     "admin",
+    //     "admin",
+    //     "admin@adminmail.com",
+    //     1337
+    // );
 ?>
 
 
