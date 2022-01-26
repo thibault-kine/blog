@@ -12,8 +12,8 @@ class Article
     {
         $this->titre = $titre;
         $this->article = $article;
-        $this->id_auteur = $id_auteur;
-        $this->id_categorie = $id_categorie;
+        $this->id_auteur = (int)$id_auteur;         //     cast
+        $this->id_categorie = (int)$id_categorie;   // mixed to int
     }
 
     public function register()
@@ -55,53 +55,34 @@ class Article
             // echo "2e fetch";
             // var_dump($fetch);
 
-            $this->id = $fetch[0]["id"];
+            $this->id = (int)$fetch[0]["id"];
             $this->date = $fetch[0]["date"];
         }
     }
 
-    public function display($date)
+    public function display($id, $username, $category)
     {
         $host = "localhost";
         $dbname = "blog";
-        try 
-        {
-            $connexion = new PDO(
-                "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
-                "root",
-                ""
-            );
-        }
-        catch(Exception $e)
-        {
-            die("Erreur: ".$e->getMessage());
-        }
+        
+        $connexion = new PDO(
+            "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
+            "root",
+            ""
+        );
 
-        // récupère l'auteur
-        $selectQ = "SELECT `login` FROM `utilisateurs` WHERE `id`='$this->id_auteur'";
-        $prep = $connexion->prepare($selectQ);
-        $prep->execute();
-        $fetch = $prep->fetchAll();
-        if(!empty($fetch))
-        {
-            $auteur = $fetch[0]["login"];
-        }
-
-        // récupère la catégorie
-        $selectQ = "SELECT * FROM `categories` WHERE `id`='$this->id_categorie'";
-        $prep = $connexion->prepare($selectQ);
-        $prep->execute();
-        $fetch = $prep->fetchAll(PDO::FETCH_ASSOC);
-        if(!empty($fetch))
-        {
-            $categorie = $fetch["nom"];
-        }
+        // récupère la date
+        $stmt = $connexion->prepare("SELECT * FROM articles WHERE id=:id");
+        $stmt->bindValue("id", $id);
+        $stmt->execute();
+        $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $this->date = $fetch[0]["date"];
 
         echo "
         <article>
-            <h1>'$this->titre'</h1>
-            <p><b>Posté le '$date' par '$auteur' - Catégorie '$categorie'</b></p>
-            <p>'$this->article'</p>
+            <h1>".$this->titre."</h1>
+            <p><b>Posté le ".$this->date." par ".$username." - Catégorie ".$category."</b></p>
+            <p>".$this->article."</p>
         </article>";
     }
 
@@ -133,6 +114,28 @@ class Article
     public function getDate()
     {
         return $this->date;
+    }
+
+    // Setters
+
+    public function setTitle($t)
+    {
+        $this->titre = $t;
+    }
+
+    public function setArticle($a)
+    {
+        $this->article = $a;
+    }
+
+    public function setAuthorID($authID)
+    {
+        $this->id_auteur = $authID;
+    }
+
+    public function setCategoryID($catID)
+    {
+        $this->id_categorie = $catID;
     }
 }
 ?>
