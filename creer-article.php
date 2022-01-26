@@ -4,6 +4,7 @@ include "header.php";
 require "classes/user.php";
 require "classes/article.php";
 require "classes/categorie.php";
+
 ?>
 
 <h1>Créer article</h1>
@@ -61,14 +62,32 @@ if(!empty($_POST["titre"]) && !empty($_POST["article"]))
         {
             $article->register(); // renseigne l'article dans la bdd
 
-            $_SESSION["current-article"] = $article;
+            $stmt = $connexion->prepare("SELECT * FROM articles WHERE article=:article");
+            $stmt->bindValue("article", $_POST["titre"]." - ".$_POST["article"]);
+            $stmt->execute();
+            $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            header("location: voir-article.php");
+            if(!empty($fetch))
+            {
+                $_SESSION["current-article"] = $article;
+                header("location: voir-article.php");
+            }
+            else
+            {
+                try
+                {
+                    $article->register();
+                }
+                catch(Exception $e)
+                {
+                    echo "Error: ".$e->getMessage();
+                }
+            }            
         }
     }
 }
 
-var_dump($_SESSION);
+// var_dump($_SESSION);
 
 include "footer.php";
 ?>

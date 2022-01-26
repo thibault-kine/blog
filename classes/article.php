@@ -46,9 +46,14 @@ class Article
         // sinon
         else
         {
-            $pdo->prepare("INSERT INTO `articles`(`article`, `id_utilisateur`, `id_categorie`, `date`) VALUES ('$article', '$id_auteur', '$id_categorie', CURRENT_TIMESTAMP)")->execute();
+            $insert = $pdo->prepare("INSERT INTO `articles`(`article`, `id_utilisateur`, `id_categorie`, `date`) VALUES (:article, :auteur, :cat, CURRENT_TIMESTAMP)");
+            $insert->bindValue("article", $article);
+            $insert->bindValue("auteur", $id_auteur);
+            $insert->bindValue("cat", $id_categorie);
+            $insert->execute();
             
-            $stmt = $pdo->prepare("SELECT * FROM `articles` WHERE `article`='$article'");
+            $stmt = $pdo->prepare("SELECT * FROM `articles` WHERE `article`=:article");
+            $stmt->bindValue("article", $article);
             $stmt->execute();
             $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -84,6 +89,32 @@ class Article
             <p><b>Posté le ".$this->date." par ".$username." - Catégorie ".$category."</b></p>
             <p>".$this->article."</p>
         </article>";
+    }
+
+    public function displayInline($id, $username, $category)
+    {
+        $host = "localhost";
+        $dbname = "blog";
+        
+        $connexion = new PDO(
+            "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
+            "root",
+            ""
+        );
+
+        // récupère la date
+        $stmt = $connexion->prepare("SELECT * FROM articles WHERE id=:id");
+        $stmt->bindValue("id", $id);
+        $stmt->execute();
+        $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $this->date = $fetch[0]["date"];
+
+        echo "
+        <a href='voir-article.php?id=".$id."' class='inline-article-link' name='link'>
+        <div class='inline-article'>
+            <h2>".$this->titre."</h2>
+            <h3>Par ".$username." | Catégorie ".$category."</h3>
+        </div></a>";
     }
 
     public function getID()
