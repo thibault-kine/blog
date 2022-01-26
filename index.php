@@ -1,15 +1,5 @@
 <?php
     include 'header.php';
-
-    // require "classes/user.php";
-
-    // $admin = new User();
-    // $admin->register(
-    //     "admin",
-    //     "admin",
-    //     "admin@adminmail.com",
-    //     1337
-    // );
 ?>
 
 
@@ -18,7 +8,7 @@
 <p>Ici vous pourrez decouvrir plein d'articles ecrit par nos soins</p>
 
 <?php
-var_dump($_SESSION);
+
     require "classes/article.php";
 //     public function article()
 //         {
@@ -27,7 +17,7 @@ var_dump($_SESSION);
 //             $exec ->execute();
 //             $arti = $exec->fetchAll();
 //         }
-// var_dump($_SESSION);
+
 
 ?>
 

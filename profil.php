@@ -21,9 +21,9 @@
             <label for="email">Email:</label>
             <input type="text" name="email" id="email" value="<?php echo$_SESSION['utilisateur']['email'] ?>">
             <label for="password">Mot de passe:</label>
-            <input type="password" name="password" id="password" value="<?php echo$_SESSION['utilisateur']['password'] ?>">
+            <input type="password" name="password" id="password" value="Modifiez votre mots de passe">
             <label for="password2">Confirmez votre mot de passe:</label>
-            <input type="password" name="password2" id="password2" value="<?php echo$_SESSION['utilisateur']['password'] ?>">
+            <input type="password" name="password2" id="password2" value="Répétez votre mot de passe">
             <input type="submit" value="submit" name="submit">
 </form>
 
@@ -40,6 +40,5 @@
         header('location:profil.php');
         exit();
     }
-    var_dump($_SESSION);
     include 'footer.php';
 ?>
