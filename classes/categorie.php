@@ -91,7 +91,7 @@ class Categorie
                     <td><?=$cat['id']?></td>
                     <td><?=$cat['nom']?></td>
                     <td><a href="?supprime=<?= $cat['id'] ?>">Supprimer</a></td>
-                    <td><a href="formART.php?modif=<?= $cat['id'] ?>">Modifier</a></td>
+                    <td><a href="formART.php?modifi=<?= $cat['id'] ?>">Modifier</a></td>
                     </tr>
                 </tbody>
         <?php endforeach ?>
@@ -120,7 +120,7 @@ class Categorie
         unset($this->name);
     }
 
-    public function update($nom)
+    public function updatenomcat($nom)
     {
         $host = "localhost";
         $dbname = "blog";
@@ -129,12 +129,11 @@ class Categorie
             "root",
             ""
         );
-        $idget2=$_GET['modif'];
+        $idget2=$_GET['modifi'];
         $updcat = "UPDATE categories SET nom = :nom WHERE id=:idget2";
-
         $prepa = $connexion->prepare($updcat);
         $prepa->bindValue(':nom', $nom, PDO::PARAM_STR);
-        $prepa->bindValue(':idget2', $idget2, PDO::PARAM_STR);
+        $prepa->bindValue(':idget2', $idget2, PDO::PARAM_INT);
         $prepa->execute();
     }
 }
