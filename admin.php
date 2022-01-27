@@ -17,7 +17,7 @@
     }
 ?>
 
-<h1>CATÉGORIE D'ARTICLES</h1>
+<h1>CATEGORIE D'ARTICLES</h1>
 
 <?php
     $categorie=new Categorie();
@@ -31,7 +31,7 @@
             exit();
     }
 ?>
-
+<a href="formnewcatART.php" id="lienadm">Nouvelle categorie</a>
 
 
 

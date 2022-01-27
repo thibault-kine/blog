@@ -1,11 +1,30 @@
-/* ------------- header ---------------- */
+*{
+    margin: 0;
+    padding:0;
+}
 
+/* ------------- header ---------------- */
 header{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    background-color: cornsilk;
-    padding-top: 2vh;
+    background-color: #01497c;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    font-family: ZCOOL kuaile;
+    
+}
+#lienheader{
+    text-decoration: none;
+    
+    font-weight: bolder;
+    /* border: solid black; */
+    background-color: #468faf;
+    border-radius: 15%;
+    justify-content: space-around;
+    padding: 1%;
+    box-shadow: 7px 5px 9px  #012a4a, -0.5em 0 .4em #012a4a;
+    
 }
 
 
@@ -13,88 +32,66 @@ header{
 
 main{
     align-items: center;
+    justify-content:center;
+    text-align: center;
+    font-family: Lambola;
+    padding:2%
+}
+h1,     #lienadm{
+    padding-top: 2%;
 }
 .form, form{
     display: flex; 
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #61a5c2
+}
+#tableuser, #tablecat{
+    display: flex;
+    justify-content:center;
+    border: black solid;
+    padding:1%;
+    
+}
+thead, tbody, tr, td{
+    border:black solid;
+    padding-top:1%;
+    padding-bottom: 1%;
+    padding-right: 1%;
+    margin-left: 1%;
 }
 
 
 /* -------------- footer ------------ */
 
 footer{
-    display: flex; 
+    background-color: #014f86;
+    padding: 2vh;
+    display: flex;
     justify-content: space-around;
-    align-items: flex-end;
-    border: crimson solid;
 }
 
 #lienperso{
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    border: blue solid
+    align-items: initial;
+    justify-content:space-around;
 }
 #grplogo{
     display: flex; 
-    flex-direction: row;
-    align-items: center;
-    height: 10vh;
-    width: 100vw;
-    border: pink solid;
+    /* justify-content: end; */
+    width: 10%;
+    padding-top: 1%;
+    font-family: ZCOOL kuaile;
 }
-/* === Liste des articles === */
-.inline-article
-{
-    border: 2px solid blueviolet;
-    display: flex;
-    flex-direction: row;
-    padding: 10px;
-    height: 7vh;
-    margin: 20px;
-    background-color: rgb(74, 35, 110);
+#lienfooter{
+    text-decoration: none;
+    background-color: #468faf;
+    border-radius: 15%;
     justify-content: space-between;
+    padding: 1%;
+    box-shadow: 10px 5px 5px #012a4a;
+    font-family: ZCOOL kuaile;
+    
 }
 
-.inline-article *
-{
-    margin: 0;
-    align-self: center;
-    text-decoration: none;
-}
-
-.inline-article-link
-{
-    text-decoration: none;
-    color: white;
-}
-
-.inline-article:hover
-{
-    background-color: rgb(124, 60, 184)
-}
-
-#nav
-{
-    border: 1px solid red;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-/* articles */
-article
-{
-    border: 2px solid green;
-    border-radius: 15px;
-    background-color: rgb(66, 148, 66);
-    color: white;
-    padding: 10px;
-}
-
-article h1, article #info
-{
-    border-bottom: 2px solid green;
-}

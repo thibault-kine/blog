@@ -161,7 +161,7 @@ class User
         $id2->execute();
         $users = $id2->fetchAll(PDO::FETCH_ASSOC);
         ?>
-        
+        <div id="tableuser">
             <table>
                 <thead> 
                     <th>id</th>
@@ -185,6 +185,7 @@ class User
                 </tbody>
         <?php endforeach ?>
             </table>
+        </div>
 <?php  
     }
     
