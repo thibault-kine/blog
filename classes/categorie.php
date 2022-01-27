@@ -4,13 +4,14 @@ class Categorie
     private $id;
     public $nom;
 
-    public function __construct($nom)
+    public function __construct()
     {
-        $this->nom = $nom;
+       
     }
 
-    public function register()
+    public function register($nom)
     {
+        $this->nom = $nom;
         $host = "localhost";
         $dbname = "blog";
 
@@ -60,5 +61,82 @@ class Categorie
     {
         return $this->name;
     }
+
+    public function getCatInfo() //sans param, retourne tableau avec info categories
+    {
+        $host = "localhost";
+        $dbname = "blog";
+
+        $connexion = new PDO(
+            "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
+            "root",
+            ""
+        );
+
+        $selec = "SELECT * FROM `categories`";
+        $nomart = $connexion -> prepare($selec);
+        $nomart->execute();
+        $cats = $nomart->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+        
+            <table>
+                <thead> 
+                    <th>id</th>
+                    <th>nom</th>
+                </thead>
+        <?php foreach($cats as $key=>$cat):?>
+        
+               <tbody>
+                    <tr>
+                    <td><?=$cat['id']?></td>
+                    <td><?=$cat['nom']?></td>
+                    <td><a href="?supprime=<?= $cat['id'] ?>">Supprimer</a></td>
+                    <td><a href="formART.php?modif=<?= $cat['id'] ?>">Modifier</a></td>
+                    </tr>
+                </tbody>
+        <?php endforeach ?>
+            </table>
+<?php  
+    }
+
+    public function delete($id)
+    {
+        $host = "localhost";
+        $dbname = "blog";
+
+        $connexion = new PDO(
+            "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
+            "root",
+            ""
+        );
+
+        $deleteQ = "DELETE  FROM categories WHERE id=:id";
+
+        $preparation = $connexion->prepare($deleteQ);
+        $preparation->bindValue(':id', $id, PDO::PARAM_INT);
+        $preparation->execute();
+
+        unset($this->id);
+        unset($this->name);
+    }
+
+    public function update($nom)
+    {
+        $host = "localhost";
+        $dbname = "blog";
+        $connexion = new PDO(
+            "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
+            "root",
+            ""
+        );
+        $idget2=$_GET['modif'];
+        $updcat = "UPDATE categories SET nom = :nom WHERE id=:idget2";
+
+        $prepa = $connexion->prepare($updcat);
+        $prepa->bindValue(':nom', $nom, PDO::PARAM_STR);
+        $prepa->bindValue(':idget2', $idget2, PDO::PARAM_STR);
+        $prepa->execute();
+    }
 }
+
 ?>

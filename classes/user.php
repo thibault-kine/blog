@@ -145,7 +145,7 @@ class User
         }     
     }
 
-    public function getAllInfo() //sans param, retourne tableau avec infon user
+    public function getUsersInfo() //sans param, retourne tableau avec infon user
     {
         $host = "localhost";
         $dbname = "blog";
@@ -214,8 +214,6 @@ class User
 
     public function updateidd($droits)
     {
-        var_dump($droits);
-        // $this->droits = $droits;
         $host = "localhost";
         $dbname = "blog";
         $connexion = new PDO(
@@ -231,8 +229,4 @@ class User
         $updateadmin->execute();
     }
 }
-// var_dump($droits);
-// $user=new User();
-// $user->connect('admin','admin');
-// $user->updateidd($droits);
 ?>
