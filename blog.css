@@ -45,4 +45,41 @@ footer{
     width: 100vw;
     border: pink solid;
 }
+/* === Liste des articles === */
+.inline-article
+{
+    border: 2px solid blueviolet;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    height: 7vh;
+    margin: 20px;
+    background-color: rgb(74, 35, 110);
+    justify-content: space-between;
+}
 
+.inline-article *
+{
+    margin: 0;
+    align-self: center;
+    text-decoration: none;
+}
+
+.inline-article-link
+{
+    text-decoration: none;
+    color: white;
+}
+
+.inline-article:hover
+{
+    background-color: rgb(124, 60, 184)
+}
+
+#nav
+{
+    border: 1px solid red;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
