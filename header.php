@@ -31,7 +31,7 @@
                    <option valeur="cat3">Catégorie 3</option>
                    <option valeur="cat4">Catégorie 3</option>
                 </select>';
-                echo '<a href="articles.php">Articles</a>';
+                echo '<a href="articles.php?start=1">Articles</a>';
                 echo '<a href="profil.php">Profil</a>';
                 echo '<a href="creer-article.php">Creer un article</a>';
                 echo '<a href="admin.php">Administration</a>';
@@ -49,7 +49,7 @@
                    <option valeur="cat3">Catégorie 3</option>
                    <option valeur="cat4">Catégorie 3</option>
                 </select>'; 
-                echo '<a href="articles.php">Articles</a>';
+                echo '<a href="articles.php?start=1">Articles</a>';
                 echo '<a href="profil.php">Profil</a>';
                 echo '<a href="creer-article.php">Creer un article</a>';
                 echo '<a href="deconnexion.php">Déconnexion</a>';
@@ -65,7 +65,7 @@
                    <option valeur="cat3">Catégorie 3</option>
                    <option valeur="cat4">Catégorie 3</option>
                 </select>';
-                echo '<a href="articles.php">Articles</a>';
+                echo '<a href="articles.php?start=1">Articles</a>';
                 echo '<a href="profil.php">Profil</a>';
                 echo '<a href="deconnexion.php">Déconnexion</a>';
 
