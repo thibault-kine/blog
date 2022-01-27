@@ -2,12 +2,21 @@
 include "header.php";
 
 require "classes/article.php";
+require "classes/commentaire.php";
 ?>
 
 <h1>Voir article</h1>
 
 <?php
-// var_dump($_SESSION["current-article"]);
+if($_SESSION["utilisateur"]["idd"] == '42' || $_SESSION["utilisateur"]["idd"] == '1337')
+{
+    echo "
+    <form method='post'>
+        <input type='submit' name='delete' value='Supprimer cet article'>
+    </form>";
+}
+
+// var_dump($_SESSION);
 
 $connexion = new PDO(
     "mysql:host=localhost;dbname=blog;charset=utf8",
@@ -90,7 +99,59 @@ else
 
     $currArt->display($_GET["id"], $login, $categorie);
 }
+?>
 
+<form method="post" id="comment-form">
+    <label for="commentaire">Commentez :</label>
+    <textarea name="commentaire" cols="60" rows="10" placeholder="Lorem ipsum dolor sit amet..."></textarea>
+    <input type="submit" name="comm-submit">
+</form>
+
+<?php
+// suppression de l'article
+if($_POST["delete"])
+{
+    $stmt = $connexion->prepare("DELETE FROM articles WHERE id=:id");
+    $stmt->bindValue("id", $_GET["id"], PDO::PARAM_INT);
+    $stmt->execute();
+
+    header("location: articles.php");
+}
+
+if(!empty($_POST["commentaire"]))
+{
+    $tempComm = new Commentaire(
+        $_POST["commentaire"],
+        $_GET["id"],
+        $_SESSION["utilisateur"]["id"]
+    );
+
+    if($_POST["comm-submit"])
+    {
+        $tempComm->register();
+    }
+}
+
+// var_dump($comm);
+
+// afficher les commentaires
+$stmt = $connexion->prepare("SELECT * FROM commentaires WHERE id_article=:id ORDER BY id DESC");
+$stmt->bindValue("id", $_GET["id"]);
+$stmt->execute();
+$fetch1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// parcours la liste des commentaires
+foreach($fetch1 as $c)
+{
+    $commentaire = new Commentaire($c["commentaire"], $c["id_article"], $c["id_utilisateur"]);
+
+    // récupère le login de l'auteur
+    $stmt = $connexion->prepare("SELECT * FROM utilisateurs WHERE id=:id");
+    $stmt->bindValue("id", $c["id_utilisateur"]);
+    $stmt->execute();
+    $fetchLogin = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $commentaire->display($c["id"], $fetchLogin[0]["login"]);
+}
 
 include "footer.php";
 ?>

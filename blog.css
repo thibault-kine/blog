@@ -83,3 +83,18 @@ footer{
     flex-direction: row;
     align-items: center;
 }
+
+/* articles */
+article
+{
+    border: 2px solid green;
+    border-radius: 15px;
+    background-color: rgb(66, 148, 66);
+    color: white;
+    padding: 10px;
+}
+
+article h1, article #info
+{
+    border-bottom: 2px solid green;
+}
