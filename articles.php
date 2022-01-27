@@ -38,6 +38,13 @@ unset($_SESSION["current-article"]);
 </form>
 
 <?php
+if(!isset($_GET["start"]))
+{
+    $_GET["start"] = 1;
+}
+$page = $_GET["start"];
+$limite = 5;
+$offset = ($page - 1) * $limite;
 
 $connexion = new PDO(
     "mysql:host=localhost;dbname=blog;charset=utf8",
@@ -51,11 +58,15 @@ if($_GET["categorie"] == "default" || !isset($_GET["categorie"]))
 }
 else
 {
-    $tri = "WHERE id_categorie=:id";
+    $tri = "WHERE id_categorie=".$_GET["categorie"];
 }
 
+$query = "SELECT * FROM articles $tri LIMIT 5 OFFSET $offset";
+var_dump($query);
+
 // id par ordre décroissant, du plus récent au plus ancient
-$stmt = $connexion->prepare("SELECT * FROM articles ".$tri." LIMIT 5");
+$stmt = $connexion->prepare($query);
+// si la catégorie est autre que "default"
 if($_GET["categorie"] != "default") $stmt->bindValue("id", $_GET["categorie"], PDO::PARAM_INT);
 $stmt->execute();
 $fetch1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -87,8 +98,30 @@ foreach($fetch1 as $a)
     $article->displayInline($a["id"], $fetchLogin[0]["login"], $fetchCat[0]["nom"]);
 }
 
-$page = $_GET["start"];
+if(!isset($_GET["start"]))
+{
+    $_GET["start"] = 1;
+}
+?>
 
+<div id="pagination">
+    <?php
+    if($page == 1)
+    {
+        ?>
+        <a href="?start=<?php echo $page + 1 ?>">Page suivante</a>
+        <?php
+    }
+    else
+    {
+        ?>
+        <a href="?start=<?php echo $page - 1 ?>">Page précédente</a>
+        <a href="?start=<?php echo $page + 1 ?>">Page suivante</a>
+        <?php
+    }
+    ?>
+</div>
 
+<?php
 include("footer.php");
 ?>
