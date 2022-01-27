@@ -1,5 +1,5 @@
 <?php
-// session_start();
+//session_start();
 class User
 {
     private $id;
@@ -22,7 +22,7 @@ class User
         $this->login    = $_login;
         $this->password = $_password;
         $this->email    = $_email;
-        $this->droits   = $_droits;
+        $this->droits   = (int)$_droits;
         if(isset($this->login) && isset($this->email)) 
         {
             $host = "localhost";
@@ -72,7 +72,7 @@ class User
         }
     }
     
-    public function delete()
+    public function delete($id)
     {
         $host = "localhost";
         $dbname = "blog";
@@ -83,9 +83,10 @@ class User
             ""
         );
 
-        $deleteQ = "DELETE FROM utilisateurs WHERE id='$this->id'";
+        $deleteQ = "DELETE  FROM utilisateurs WHERE id=:id";
 
         $preparation = $connexion->prepare($deleteQ);
+        $preparation->bindValue(':id', $id, PDO::PARAM_INT);
         $preparation->execute();
 
         unset($this->id);
@@ -144,7 +145,7 @@ class User
         }     
     }
 
-    public function getAllInfo() //sans param, retourne tableau avec infon user
+    public function getUsersInfo() //sans param, retourne tableau avec infon user
     {
         $host = "localhost";
         $dbname = "blog";
@@ -155,29 +156,36 @@ class User
             ""
         );
 
-        $selec = "SELECT * FROM `utilisateurs` WHERE `login` = :login";
-        $login1 = $_POST['login'];
+        $selec = "SELECT * FROM `utilisateurs`";
         $id2 = $connexion -> prepare($selec);
-        $id2->bindValue(':login', $login1, PDO ::PARAM_STR);
         $id2->execute();
-        $user = $id2->fetchAll();
-        $login = $user['login'];
-        $password = $user['password'];
-        $email = $user['email'];
-
-
-        echo "<table><thead>
-        <th>Login</th>
-        <th>Password</th>
-        <th>Email</th>
-    </thead>
-    <tbody>
-        <tr>
-        <td>".$login."</td>
-        <td>".$password."</td>
-        <td>".$email."</td>
-        </tr>
-    </tbody></table> ";
+        $users = $id2->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+        
+            <table>
+                <thead> 
+                    <th>id</th>
+                    <th>Login</th>
+                    <th>Password</th>
+                    <th>Email</th>
+                    <th>id_droits</th>
+                </thead>
+        <?php foreach($users as $key=>$util):?>
+        
+               <tbody>
+                    <tr>
+                    <td><?=$util['id']?></td>
+                    <td><?=$util['login']?></td>
+                    <td>Mot de passe non modifiable</td>
+                    <td><?=$util['email']?></td>
+                    <td><?=$util['id_droits']?></td>
+                    <td><a href="?suppr=<?= $util['id'] ?>">Supprimer</a></td>
+                    <td><a href="formIDD.php?modif=<?= $util['id'] ?>">Modifier</a></td>
+                    </tr>
+                </tbody>
+        <?php endforeach ?>
+            </table>
+<?php  
     }
     
     public function update($login,$password,$email)
@@ -185,7 +193,7 @@ class User
         $this->login = $login;
         $this->password = $password;
         $password = password_hash($this->password, PASSWORD_DEFAULT);
-        $this->email    = $email;
+        $this->email = $email;
         $iduser = $_SESSION['utilisateur']['id'];
         echo $iduser;
         $host = "localhost";
@@ -196,7 +204,6 @@ class User
             ""
         );
         $up = "UPDATE `utilisateurs` SET `login`='$login',`email`='$email',`password`='$password' WHERE `id`=:iduser";
-        // $upda = "SELECT * FROM `utilisateurs` WHERE `id`=$_SESSION[id]";
         $update=$connexion->prepare($up);
         $update->bindValue( ':iduser', $iduser, PDO::PARAM_STR);
         $update->execute();
@@ -204,11 +211,22 @@ class User
         $_SESSION['utilisateur']['email']=$email;
         $_SESSION['utilisateur']['password']=$password;
     }
+
+    public function updateidd($droits)
+    {
+        $host = "localhost";
+        $dbname = "blog";
+        $connexion = new PDO(
+            "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
+            "root",
+            ""
+        );
+        $idget= $_GET['modif'];
+        $upda= "UPDATE utilisateurs SET id_droits = :id_droits WHERE id =:idget";
+        $updateadmin=$connexion->prepare($upda);
+        $updateadmin->bindvalue(":id_droits", $droits,PDO::PARAM_INT);
+        $updateadmin->bindvalue(":idget", $idget,PDO::PARAM_INT);
+        $updateadmin->execute();
+    }
 }
-// $user= new User();
-// $user->connect('frdk10','mdp10');
-// $user->update('frdk10','mdp100','email@email.com');
-
-
-// $user->connect('admin','admin');
 ?>

@@ -1,9 +1,12 @@
 <?php
     include 'header.php';
     require 'classes/user.php';
-
+    require 'classes/categorie.php';
+?>
+    <h1>UTILISATEURS</h1>
+<?php
     $user=new User();
-    $user->getAllInfo();
+    $user->getUsersInfo();
 
     if(isset($_GET['suppr']))
     {
@@ -14,8 +17,20 @@
     }
 ?>
 
+<h1>CATÉGORIE D'ARTICLES</h1>
 
+<?php
+    $categorie=new Categorie();
+    $categorie->getCatInfo();
 
+    if(isset($_GET['supprime']))    
+    {
+        $idcat=$_GET['supprime'];
+        $categorie->delete($idcat);
+            header('location:admin.php');
+            exit();
+    }
+?>
 
 
 
