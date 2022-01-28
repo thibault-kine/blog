@@ -24,8 +24,13 @@ header{
     justify-content: space-around;
     padding: 1%;
     box-shadow: 7px 5px 9px  #012a4a, -0.5em 0 .4em #012a4a;
+   
     
 }
+a:link {color:black;}              /* Lien non visité */
+a:visited {color:rgb(65, 63, 63);}          /* Lien visité */
+a:hover {color:#fa0808;}            /* Lien survolé*/
+a:active {color:#050507;}           /* Lien sélectionné */
 
 
 /* ------------- main -------------- */
@@ -37,7 +42,7 @@ main{
     font-family: Lambola;
     padding:2%
 }
-h1,     #lienadm{
+h1{
     padding-top: 2%;
 }
 .form, form{
@@ -45,15 +50,38 @@ h1,     #lienadm{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #61a5c2
+    background-color: #61a5c2;
+}
+
+
+
+/*---------------- page admin ------------------*/
+#h1admin{
+    padding-top: 7vh;
+    padding-bottom:3vh;
 }
 #tableuser, #tablecat{
     display: flex;
     justify-content:center;
     border: black solid;
     padding:1%;
-    
+    background-color: #61a5c2;
+    border-radius: 15%;
+    box-shadow: 7px 5px 9px  #012a4a, -0.5em 0 .4em #012a4a;    
+    /* border-radius:45%; */
+    margin-bottom: 3vh;   
 }
+
+#tableuser
+{
+    margin-left: 30vw;
+    margin-right:30vw;
+}
+
+#tablecat{
+    margin-left: 40vw;
+    margin-right:40vw; 
+}    
 thead, tbody, tr, td{
     border:black solid;
     padding-top:1%;
@@ -62,6 +90,7 @@ thead, tbody, tr, td{
     margin-left: 1%;
 }
 
+/*--------------- fin page admin ---------------*/
 
 /* -------------- footer ------------ */
 
@@ -95,3 +124,56 @@ footer{
     
 }
 
+/* essai hover titre */
+
+h1::before {  
+    transform: scaleX(0);
+    transform-origin: bottom right;
+  }
+  
+  h1:hover::before {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  
+  h1::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    inset: 0 0 0 0;
+    background: hsl(200 100% 80%);
+    z-index: -1;
+    transition: transform .3s ease;
+  }
+  
+  h1 {
+    position: relative;
+    font-size: 5rem;
+  }
+
+  #h1admin::before {  
+    transform: scaleX(0);
+    transform-origin: bottom right;
+  }
+  
+  #h1admin:hover::before {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  
+  #h1admin::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    inset: 0 0 0 0;
+    background: hsl(200 100% 80%);
+    z-index: -1;
+    transition: transform .3s ease;
+  }
+  
+  #h1admin {
+    position: relative;
+    font-size: 2rem;
+  }

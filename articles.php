@@ -62,7 +62,7 @@ else
 }
 
 $query = "SELECT * FROM articles $tri LIMIT 5 OFFSET $offset";
-var_dump($query);
+// var_dump($query);
 
 // id par ordre décroissant, du plus récent au plus ancient
 $stmt = $connexion->prepare($query);
@@ -94,7 +94,7 @@ foreach($fetch1 as $a)
     $stmt->execute();
     $fetchCat = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // effectue l'affichage pour chaque article
+    // effectue l'affichage inline pour chaque article
     $article->displayInline($a["id"], $fetchLogin[0]["login"], $fetchCat[0]["nom"]);
 }
 

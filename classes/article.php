@@ -86,7 +86,7 @@ class Article
         echo "
         <article>
             <h1>".$this->titre."</h1>
-            <p><b>Posté le ".$this->date." par ".$username." - Catégorie ".$category."</b></p>
+            <p id='info'><b>Posté le ".$this->date." par ".$username." - Catégorie ".$category."</b></p>
             <p>".$this->article."</p>
         </article>";
     }

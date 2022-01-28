@@ -25,7 +25,7 @@
                 echo '<a href="articles.php" id="lienfooter">Articles</a>';
                 echo '<a href="profil.php" id="lienfooter">Profil</a>';
                 echo '<a href="creer-article.php" id="lienfooter">Creer un article</a>';
-                echo '<a href="deconnexion.php">Deconnexion</a>';
+                echo '<a href="deconnexion.php" id="lienfooter">Deconnexion</a>';
             }
             // acces user
             else

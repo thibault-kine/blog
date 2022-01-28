@@ -78,7 +78,7 @@ class Categorie
         $nomart->execute();
         $cats = $nomart->fetchAll(PDO::FETCH_ASSOC);
         ?>
-        
+        <div id="tablecat">
             <table>
                 <thead> 
                     <th>id</th>
@@ -96,6 +96,7 @@ class Categorie
                 </tbody>
         <?php endforeach ?>
             </table>
+        </div>
 <?php  
     }
 

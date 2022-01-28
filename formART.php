@@ -1,8 +1,6 @@
 <?php
     include 'header.php';
     require 'classes/categorie.php';
-    
-    var_dump($_GET['modifi']);
 ?>
 <form action="" method="post">
     <label for="categorie">Changer le nom de la categorie </label>

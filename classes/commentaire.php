@@ -5,6 +5,7 @@ class Commentaire
     public $commentaire;
     public $id_article;
     public $id_utilisateur;
+    public $date;
 
     public function __construct($commentaire, $id_article, $id_utilisateur)
     {
@@ -23,15 +24,15 @@ class Commentaire
 
         $pdo = new PDO($dsn, $user, $pass);
 
-        $commentaire = $this->commentaire;
-        $id_article = $this->id_article;
-        $id_utilisateur = $this->id_utilisateur;
-
-        $stmt = $pdo->prepare("SELECT * FROM `commentaire` WHERE `commentaire`='.$commentaire.' AND `id_utilisateur`='.$id_utilisateur.'");
+        $stmt = $pdo->prepare("SELECT * FROM commentaires WHERE commentaire=:comm");
+        $stmt->bindValue("comm", $this->commentaire);
         $stmt->execute();
         $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // si un commentaire existe déjà
+        // echo "1er fetch";
+        // var_dump($fetch);
+
+        // si un article existe déjà
         if(!empty($fetch))
         {
             echo "Un commentaire identique existe déjà.";
@@ -40,49 +41,48 @@ class Commentaire
         // sinon
         else
         {
-            $pdo->prepare("INSERT INTO `commentaires`(`commentaire`, `id_article`, `id_utilisateur`, `date`) VALUES ('.$commentaire.', '.$id_article.', '.$id_utilisateur.', CURRENT_TIMESTAMP)")->execute();
+            $insert = $pdo->prepare("INSERT INTO `commentaires`(`commentaire`, `id_article`, `id_utilisateur`, `date`) VALUES (:comm, :art, :user, CURRENT_TIMESTAMP)");
+            $insert->bindValue("comm", $this->commentaire);
+            $insert->bindValue("art", $this->id_article);
+            $insert->bindValue("user", $this->id_utilisateur);
+            $insert->execute();
+            
+            $stmt = $pdo->prepare("SELECT * FROM `commentaires` WHERE `commentaire`=:comm");
+            $stmt->bindValue("comm", $this->commentaire);
+            $stmt->execute();
+            $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // echo "2e fetch";
+            // var_dump($fetch);
+
+            $this->id = (int)$fetch[0]["id"];
+            $this->date = $fetch[0]["date"];
         }
-
-        $stmt = $pdo->prepare("SELECT `id` FROM `commentaire` WHERE `commentaire`='.$commentaire.' AND `id_utilisateur`='.$id_utilisateur.'");
-        $stmt->execute();
-        $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $this->id = $fetch[0]["id"];
     }
 
-    public function display()
+    public function display($id, $username)
     {
         $host = "localhost";
         $dbname = "blog";
-        try 
-        {
-            $connexion = new PDO(
-                "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
-                "root",
-                ""
-            );
-        }
-        catch(Exception $e)
-        {
-            die("Erreur: ".$e->getMessage());
-        }
+        
+        $connexion = new PDO(
+            "mysql:host=".$host.";dbname=".$dbname.";charset=utf8",
+            "root",
+            ""
+        );
 
-        // récupère l'auteur
-        $selectQ = "SELECT `login` FROM `utilisateurs` WHERE `id`='$this->id_utilisateur'";
-        $prep = $connexion->prepare($selectQ);
-        $prep->execute();
-        $fetch = $prep->fetchAll();
-        if(!empty($fetch))
-        {
-            $auteur = $fetch[0]["login"];
-        }
+        // récupère la date
+        $stmt = $connexion->prepare("SELECT * FROM commentaires WHERE id=:id");
+        $stmt->bindValue("id", $id);
+        $stmt->execute();
+        $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $this->date = $fetch[0]["date"];
 
         echo "
-        <div class='commentaire'>
-            <h2>".$auteur." a dit:</h2>
+        <div class='comm'>
+            <p id='info'><b>Posté le ".$this->date." par ".$username."</b></p>
             <p>".$this->commentaire."</p>
-        </div>
-        ";
+        </article>";
     }
 }
 ?>

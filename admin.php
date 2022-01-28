@@ -3,7 +3,7 @@
     require 'classes/user.php';
     require 'classes/categorie.php';
 ?>
-    <h1>UTILISATEURS</h1>
+    <h2 id="h1admin">UTILISATEURS</h2>
 <?php
     $user=new User();
     $user->getUsersInfo();
@@ -17,7 +17,7 @@
     }
 ?>
 
-<h1>CATEGORIE D'ARTICLES</h1>
+<h2 id="h1admin">CATEGORIE D'ARTICLES</h2>
 
 <?php
     $categorie=new Categorie();
