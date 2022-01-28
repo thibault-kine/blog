@@ -2,12 +2,7 @@
     include 'header.php';
 require ('classes/user.php');
 $user=new User();
-    if(empty($_POST))
-    {
-        echo "veuillez vous connecter!";
-    }
-    else
-    {
+
     if(!empty($_POST['login']) && !empty($_POST['password']) && isset($_POST['login']) && isset($_POST['password']))
     {   
         $login=$_POST['login'];
@@ -33,7 +28,7 @@ $user=new User();
                 }
             }    
     }
-}
+
    
 ?>
 

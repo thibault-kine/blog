@@ -1,11 +1,8 @@
 <?php
     include 'header.php';
     require 'classes/user.php';
-    var_dump($_GET['modif']);
-
     $user = new User();
 ?>
-
 
 <form action="" method="post">
     <label for="droit">Quel droits donne t'on à l'utilisateur selectionné</label>
@@ -32,4 +29,5 @@
         echo "Modification validée.";
         var_dump($droits);
     }
+    include 'footer.php';
 ?>
