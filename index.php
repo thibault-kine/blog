@@ -19,11 +19,11 @@
 //         }
 
 
-?>
 
 
-
-<a href="articles.php">Articles</a>
-<?php
+if($_SESSION)
+{
+   echo "<a href='articles.php'>Articles</a>";
+}
     include 'footer.php';
 ?>

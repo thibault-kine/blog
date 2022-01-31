@@ -4,7 +4,7 @@
 ?>
 
 <h1>Profil</h1>
-<p>Bonjour <?php echo $_SESSION["utilisateur"]["login"] ?></p>
+<p id="pageprofil">Bonjour <?php echo $_SESSION["utilisateur"]["login"] ?></p>
 <p>Ici vous pouvez modifier vore profil</p>
 
 <?php
@@ -15,7 +15,7 @@
 
 ?>
 
-<form action="" method="post">
+<form action="" method="post" id="formprof">
 <label for="login">Login:</label>
             <input type="text" name="login" id="login" value="<?php echo$_SESSION['utilisateur']['login'] ?>">
             <label for="email">Email:</label>

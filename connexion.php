@@ -33,7 +33,7 @@ $user=new User();
 ?>
 
 <h1>Connectez-vous</h1>
-    <form action="" method="post">
+    <form action="" method="post" id="formcon">
         <label for="login">Login</label>
         <input type="text" name="login" id="login">
         <label for="password">Mot de passe</label>

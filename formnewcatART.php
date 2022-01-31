@@ -3,7 +3,7 @@
     require 'classes/categorie.php';
     $catego = new Categorie();
 ?>
-<form action="" method="post" name="categorie">
+<form action="" method="post" name="categorie" id="formnewcatart">
     <label for="categorie">Nouvelle categorie</label>
     <input type="text" name="categorie" id="">
     <input type="submit" name="submit" value="submit">
