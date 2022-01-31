@@ -2,7 +2,9 @@
     include 'header.php';
     require 'classes/categorie.php';
 ?>
-<form action="" method="post">
+
+<h1>NOUVELLE CATEGORIE</h1>
+<form action="" method="post" id="formart">
     <label for="categorie">Changer le nom de la categorie </label>
     <input type="text" name="categorie" value="nouveau nom de categorie">
     <input type="submit" value="submit" name='submit'>

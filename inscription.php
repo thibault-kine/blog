@@ -6,8 +6,8 @@
 
 
 <h1>Inscrivez-vous</h1>
-    <div id='form'>
-        <form action="inscription.php" method="POST">
+    <div>
+        <form action="inscription.php" method="POST" id="formins">
             <label for="login">Login:</label>
             <input type="text" name="login" id="login">
             <label for="email">Email:</label>

@@ -4,7 +4,7 @@
     $user = new User();
 ?>
 
-<form action="" method="post">
+<form action="" method="post" id="formidd">
     <label for="droit">Quel droits donne t'on à l'utilisateur selectionné</label>
 
         <div>
