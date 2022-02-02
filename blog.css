@@ -201,3 +201,27 @@ h1::before {
     position: relative;
     font-size: 2rem;
   }
+
+article
+{
+	border: 2px solid blue;
+	border-radius: 10px;
+	background-color: #6c94d4;
+	margin: 30px;
+}
+
+article *
+{
+	padding: 20px;
+}
+
+article h1
+{
+	font-size: 4em;
+	background-color: blue;
+}
+
+article p
+{
+	background-color: #82b2ff;
+}

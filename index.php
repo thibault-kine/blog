@@ -6,6 +6,7 @@
 
 <h1>BIENVENUE SUR NOTRE BLOG</h1>
 <p>Ici vous pourrez decouvrir plein d'articles ecrit par nos soins</p>
+<sub>Login admin: machin - MDP: machinnn</sub>
 
 <?php
 
@@ -23,6 +24,7 @@
 
 if($_SESSION)
 {
+	echo "<br>";
    echo "<a href='articles.php'>Articles</a>";
 }
     include 'footer.php';

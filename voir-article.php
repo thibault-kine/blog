@@ -19,9 +19,9 @@ if($_SESSION["utilisateur"]["idd"] == '42' || $_SESSION["utilisateur"]["idd"] ==
 // var_dump($_SESSION);
 
 $connexion = new PDO(
-    "mysql:host=localhost;dbname=blog;charset=utf8",
-    "root",
-    ""
+    "mysql:host=localhost;dbname=thibault-kine_blog;charset=utf8",
+    "thibault-kine",
+    "nessias84"
 );
 
 if(isset($_SESSION["current-article"]))

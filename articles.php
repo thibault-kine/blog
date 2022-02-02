@@ -17,10 +17,10 @@ unset($_SESSION["current-article"]);
         <option value="default">Tout</option>
         <?php
         $connexion = new PDO(
-            "mysql:host=localhost;dbname=blog;charset=utf8",
-            "root",
-            ""
-        );
+			"mysql:host=localhost;dbname=thibault-kine_blog;charset=utf8",
+			"thibault-kine",
+			"nessias84"
+		);
         $selectQuery = "SELECT * FROM categories";
 
         $stmt = $connexion->prepare($selectQuery);
@@ -45,11 +45,10 @@ if(!isset($_GET["start"]))
 $page = $_GET["start"];
 $limite = 5;
 $offset = ($page - 1) * $limite;
-
 $connexion = new PDO(
-    "mysql:host=localhost;dbname=blog;charset=utf8",
-    "root",
-    ""
+    "mysql:host=localhost;dbname=thibault-kine_blog;charset=utf8",
+    "thibault-kine",
+    "nessias84"
 );
 
 if($_GET["categorie"] == "default" || !isset($_GET["categorie"]))
